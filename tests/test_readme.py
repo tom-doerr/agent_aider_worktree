@@ -5,7 +5,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import argparse re re
+import argparse, re
 import subprocess
 from agent_aider_worktree import setup_arg_parser
 
