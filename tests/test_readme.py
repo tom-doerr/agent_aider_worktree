@@ -110,34 +110,38 @@ def test_arg_parser_configuration():
     assert parser.epilog, "Missing examples section in epilog"
 
     # Test task argument configuration
-    """Test that all command-line arguments are properly configured"""
-    # Create parser from main script
-    parser = setup_arg_parser()
+    def get_argument(parser, dest_name):
+        """Helper to safely get an argument by its dest name"""
+        for action in parser._actions:
+            if action.dest == dest_name:
+                return action
+        raise AssertionError(f"Argument with dest '{dest_name}' not found")
 
     # Verify task argument is positional and required
-    task_arg = [a for a in parser._actions if a.dest == "task"][0]
+    task_arg = get_argument(parser, "task")
     assert task_arg.required, "Task argument should be required"
     assert not task_arg.option_strings, "Task argument should be positional"
     assert task_arg.help == "The task description to pass to aider", "Incorrect help message"
 
     # Verify path argument configuration
-    path_arg = [a for a in parser._actions if a.dest == "path"][0]
+    path_arg = get_argument(parser, "path")
     assert path_arg.default == ".", "Default path should be current directory"
     assert path_arg.type == str, "Path argument should be string type"
     assert "-p" in path_arg.option_strings, "Missing short option for path"
     assert "--path" in path_arg.option_strings, "Missing long option for path"
 
     # Verify model argument configuration
-    model_arg = [a for a in parser._actions if a.dest == "model"][0]
+    model_arg = get_argument(parser, "model")
     assert model_arg.default == "r1", "Incorrect default model"
     assert model_arg.help == "Model to use with aider (default: r1)", "Incorrect help message"
 
     # Verify max iterations configuration
-    max_iter_arg = [a for a in parser._actions if a.dest == "max_iterations"][0]
+    max_iter_arg = get_argument(parser, "max_iterations")
     assert max_iter_arg.default == 10, "Incorrect default max iterations"
     assert max_iter_arg.type == int, "Max iterations should be integer type"
-    assert "--max-iterations" in max_iter_arg.option_strings, "Missing long option for max iterations"
+    assert "--max-iterations" in max_iter_arg.option_strings, \
+        "Missing long option for max iterations"
 
     # Verify boolean flags
-    no_push_arg = [a for a in parser._actions if a.dest == "no_push"][0]
+    no_push_arg = get_argument(parser, "no_push")
     assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
