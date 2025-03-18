@@ -81,7 +81,7 @@ def test_merge_and_push_logic(mocker):
     # Mock successful merge
     mock_run.return_value.returncode = 0
     # Include task in mock args
-    mock_args = argparse.Namespace(task="test task")
+    mock_args = argparse.Namespace(task="test task", model="r1")
     assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
 
     # Mock failed merge

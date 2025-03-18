@@ -11,7 +11,7 @@ def setup_arg_parser() -> argparse.ArgumentParser:
         epilog="""
 Examples:
   %(prog)s "Add user authentication feature"
-  %(prog)s -p /path/to/repo "Fix bug in login form" 
+  %(prog)s -p /path/to/repo "Fix bug in login form"
   %(prog)s --model claude-3-opus "Implement new feature"
   %(prog)s --inner-loop 5 "Refactor database code"
         """,
@@ -22,6 +22,7 @@ Examples:
         "-p",
         "--path",
         default=".",
+        type=str,
         help="Path to the main git repository (default: current directory)",
     )
     parser.add_argument(
@@ -30,7 +31,10 @@ Examples:
         help="Don't push changes back to main repository",
     )
     parser.add_argument(
-        "--model", default="r1", help="Model to use with aider (default: r1)"
+        "--model", 
+        default="r1",
+        choices=["r1", "claude-3-opus"],
+        help="Model to use with aider (default: r1)"
     )
     parser.add_argument(
         "--max-iterations",
