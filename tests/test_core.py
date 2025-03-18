@@ -68,6 +68,15 @@ def test_get_repo_name_empty_remote_url(mocker):
     repo_name = get_repo_name("/fake/path")
     assert repo_name == "unknown_repo"
 
+def test_get_repo_name_ssh_url_with_port(mocker):
+    """Test repo name extraction from SSH URL with custom port"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "ssh://user@host:2222/orgname/reponame.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "reponame"
+
 
 def test_run_command_success():
     """Test successful command execution"""

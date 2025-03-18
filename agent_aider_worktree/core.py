@@ -17,6 +17,8 @@ def get_repo_name(repo_path):
         return "unknown_repo"
 
     remote_url = result.stdout.strip()
+    if not remote_url:  # Handle empty remote URL case
+        return "unknown_repo"
     # Handle SSH URLs that start with git@
     if remote_url.startswith("git@"):
         # Extract repo name from SSH format (git@host:user/repo.git)
