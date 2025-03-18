@@ -88,12 +88,21 @@ def test_help_output_examples():
     help_output = result.stdout
 
     # Verify example commands exist and are properly formatted
+    # Get actual examples from help output
+    examples_section = help_output.split("Examples:")[1]
     examples = [
-        "Add user authentication feature",
-        "Fix bug in login form",
-        "Implement new feature",
-        "Refactor database code",
+        line.strip() for line in examples_section.split("\n") 
+        if line.strip() and not line.startswith("%")
     ]
+    
+    # Verify exact match of expected examples
+    expected_examples = [
+        "agent-aider-worktree \"Add user authentication feature\"",
+        "agent-aider-worktree -p /path/to/repo \"Fix bug login login form\"",
+        "agent-aider-worktree --model claude-3-opus \"Implement new feature\"",
+        "-a-aider-worktree --inner-loop 5 \"Refactor database code\""
+    ]
+    assert examples == expected_examples, "Help examples don't match expected output"
 
     for example in examples:
         assert example in help_output, f"Missing example in help output: {example}"

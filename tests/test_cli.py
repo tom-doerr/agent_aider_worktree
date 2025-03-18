@@ -56,7 +56,7 @@ def test_main_execution_with_help(capsys):
 
 def test_create_worktree_directory_creation(mocker, tmp_path):
     """Test worktree directory creation logic"""
-    mocker.patch("subprocess.run")
+    mocker.patch("agent_aider_worktree.core.run_command")
     test_repo = tmp_path / "testrepo"
     test_repo.mkdir()
 
@@ -82,14 +82,16 @@ def test_merge_and_push_logic(mocker):
 
     # Mock successful merge
     mock_run.return_value.returncode = 0
+    # Include task in mock args
+    mock_args = argparse.Namespace(task="test task")
     assert (
-        merge_and_push("/tmp", "/repo", "branch", "main", argparse.Namespace()) is True
+        merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
     )
 
     # Mock failed merge
     mock_run.return_value.returncode = 1
     assert (
-        merge_and_push("/tmp", "/repo", "branch", "main", argparse.Namespace()) is False
+        merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is False
     )
 
 
