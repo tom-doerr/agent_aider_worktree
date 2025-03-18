@@ -9,6 +9,8 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from agent_aider_worktree import (
     setup_arg_parser,
+    create_worktree,
+    merge_and_push,
 )
 
 
@@ -66,7 +68,7 @@ def test_create_worktree_directory_creation(mocker, tmp_path):
 
     from agent_aider_worktree import (
         create_worktree,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     worktree_path, branch_name, main_branch = create_worktree(
         str(test_repo), "test task"
@@ -84,7 +86,7 @@ def test_merge_and_push_logic(mocker):
 
     from agent_aider_worktree import (
         merge_and_push,
-    )  # pylint: disable=import-outside-toplevel
+    )
 
     # Mock successful merge
     mock_run.return_value.returncode = 0
