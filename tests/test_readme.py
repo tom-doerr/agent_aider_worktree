@@ -8,9 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent_aider_worktree import (
-    setup_arg_parser,
-)  # pylint: disable=wrong-import-position
+from agent_aider_worktree import setup_arg_parser
 
 
 def test_readme_exists():

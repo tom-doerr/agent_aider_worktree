@@ -27,7 +27,6 @@ def test_arg_parser_valid_arguments():
 def test_arg_parser_invalid_arguments():
     """Test argument parser with invalid inputs"""
     parser = setup_arg_parser()
-
     with pytest.raises(SystemExit):
         parser.parse_args([])  # Missing required task argument
 
@@ -52,7 +51,7 @@ def test_cli_help_output():
 def test_main_execution_with_help(capsys):
     """Test main execution with --help flag"""
     with pytest.raises(SystemExit):
-        pass
+        subprocess.run(["./agent-aider-worktree.py", "--help"], check=False)
     captured = capsys.readouterr()
     assert "Create git worktree" in captured.out
 
@@ -113,6 +112,18 @@ def test_file_inclusion_logic():
     assert args.no_python_files is True
 
 
+def test_invalid_model_handling():
+    """Test handling of invalid model names"""
+    parser = setup_arg_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["test task", "--model", "invalid-model"])
+
+def test_invalid_path_handling():
+    """Test handling of non-existent paths"""
+    parser = setup_arg_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["test task", "--path", "/non/existent/path"])
+
 def test_edge_cases():
     """Test edge case handling"""
     parser = setup_arg_parser()
@@ -121,7 +132,6 @@ def test_edge_cases():
     long_task = "a" * 1000
     args = parser.parse_args([long_task])
     assert args.task == long_task
-
     # Test special characters in task
     special_task = "Fix $weird & characters! #123"
     args = parser.parse_args([special_task])
