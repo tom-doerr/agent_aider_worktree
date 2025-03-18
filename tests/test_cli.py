@@ -79,7 +79,7 @@ def test_merge_and_push_logic(mocker):
     mock_run.return_value.returncode = 1
     assert merge_and_push("/tmp", "/repo", "branch", "main", argparse.Namespace()) is False
 
-def test_file_inclusion_logic(tmp_path):
+def test_file_inclusion_logic():
     """Test file inclusion arguments work as expected"""
     parser = setup_arg_parser()
     
