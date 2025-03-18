@@ -428,11 +428,7 @@ def setup_arg_parser() -> argparse.ArgumentParser:
     )
 
     # Positional arguments
-    parser.add_argument(
-        "task", 
-        type=str,
-        help="The task description to pass to aider"
-    )
+    parser.add_argument("task", type=str, help="The task description to pass to aider")
     # Optional arguments
     parser.add_argument(
         "-p",

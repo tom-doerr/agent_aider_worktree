@@ -1,4 +1,4 @@
-=============2025-03-18 13:37:15===================
+=============2025-03-18 17:15:28===================
 
 /home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
@@ -6,7 +6,7 @@ The event loop scope for asynchronous fixtures will default to the fixture cachi
   warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
 ============================= test session starts ==============================
 platform linux -- Python 3.11.10, pytest-8.3.4, pluggy-1.5.0
-testmon: changed files: tests/test_readme.py, unchanged files: 0, environment: default
+testmon: changed files: tests/test_cli.py, tests/test_readme.py, unchanged files: 2, environment: default
 Test order randomisation NOT enabled. Enable with --random-order or --random-order-bucket=<bucket_type>
 rootdir: /home/tom/worktrees/agent_aider_worktree/please_add_tests_20250318_124846
 plugins: mock-3.14.0, asyncio-0.24.0, testmon-2.1.3, anyio-4.9.0, timeout-2.3.1, repeat-0.9.3, xdist-3.6.1, cov-6.0.0, flake8-1.3.0, hypothesis-6.121.2, random-order-1.1.1, pylint-0.21.0
@@ -14,60 +14,177 @@ asyncio: mode=Mode.STRICT, default_loop_scope=None
 timeout: 10.0s
 timeout method: signal
 timeout func_only: False
-collected 4 items / 3 deselected / 1 selected
+collected 18 items / 5 deselected / 13 selected
 
-tests/test_readme.py F                                                   [100%]
+tests/test_readme.py F                                                   [  7%]
+tests/test_cli.py ...F........                                           [100%]
 
 =================================== FAILURES ===================================
-_____________________ test_readme_usage_section_formatting _____________________
+________________________ test_arg_parser_configuration _________________________
 
-    def test_readme_usage_section_formatting():
-        """Verify usage section has proper code formatting with valid examples"""
-        with open("README.md", "r", encoding="utf-8") as f:
-            readme = f.read()
+    def test_arg_parser_configuration():
+        """Test that all command-line arguments are properly configured"""
+        # Create parser from main script
+        parser = setup_arg_parser()
     
-        # Extract usage section content
-        usage_section = readme.split("## Usage")[1].split("##")[0]
-        # Check for bash code blocks
-        code_blocks = [block for block in usage_section.split("```") if block.strip()]
-        bash_blocks = [block for block in code_blocks if block.startswith("bash")]
-        assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
-        # Check for required command patterns in bash blocks
-        required_patterns = [
-            r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"
-        ]
+        # Test basic parser configuration
+        assert isinstance(
+            parser, argparse.ArgumentParser
+        ), "setup_arg_parser should return an ArgumentParser instance"
+        assert parser.description.startswith(
+            "Create git worktree"
+        ), "Missing correct description"
+        assert parser.epilog, "Missing examples section in epilog"
     
-        pattern_found = False
-        for block in bash_blocks:
->           if any(re.search(pattern, block) for pattern in required_patterns):
+        # Test task argument configuration
+        def get_argument(parser, dest_name):
+            """Helper to safely get an argument by its dest name"""
+            for action in parser._actions:  # pylint: disable=protected-access
+                if action.dest == dest_name:
+                    return action
+            raise AssertionError(f"Argument with dest '{dest_name}' not found")
+    
+        # Verify task argument is positional and required
+        task_arg = get_argument(parser, "task")
+        assert task_arg.required, "Task argument should be required"
+        assert not task_arg.option_strings, "Task argument should be positional"
+        assert (
+            task_arg.help == "The task description to pass to aider"
+        ), "Incorrect help message"
+    
+        # Verify path argument configuration
+        path_arg = get_argument(parser, "path")
+        assert path_arg.default == ".", "Default path should be current directory"
+        assert callable(path_arg.type), "Path argument should have validation function"
+        assert "-p" in path_arg.option_strings, "Missing short option for path"
+        assert "--path" in path_arg.option_strings, "Missing long option for path"
+    
+        # Verify model argument configuration
+        model_arg = get_argument(parser, "model")
+        assert model_arg.default == "r1", "Incorrect default model"
+        assert (
+            model_arg.help == "Model to use with aider (default: r1)"
+        ), "Incorrect help message"
+    
+        # Verify max iterations configuration
+        max_iter_arg = get_argument(parser, "max_iterations")
+        assert max_iter_arg.default == 10, "Incorrect default max iterations"
+        assert max_iter_arg.type == int, "Max iterations should be integer type"
+        assert (
+            "--max-iterations" in max_iter_arg.option_strings
+        ), "Missing long option for max iterations"
+    
+        # Verify boolean flags
+        no_push_arg = get_argument(parser, "no_push")
+>       assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
+E       AttributeError: '_StoreTrueAction' object has no attribute 'action'
 
-tests/test_readme.py:51: 
-_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+tests/test_readme.py:170: AttributeError
+__________________________ test_invalid_path_handling __________________________
 
-.0 = <list_iterator object at 0x7f0dc9683010>
+    def test_invalid_path_handling():
+        """Test handling of non-existent paths"""
+        parser = setup_arg_parser()
+>       with pytest.raises(SystemExit):
+E       Failed: DID NOT RAISE <class 'SystemExit'>
 
->   if any(re.search(pattern, block) for pattern in required_patterns):
-E   NameError: name 're' is not defined
-
-tests/test_readme.py:51: NameError
+tests/test_cli.py:124: Failed
 =========================== short test summary info ============================
-FAILED tests/test_readme.py::test_readme_usage_section_formatting - NameError...
-======================= 1 failed, 3 deselected in 0.26s ========================
+FAILED tests/test_readme.py::test_arg_parser_configuration - AttributeError: ...
+FAILED tests/test_cli.py::test_invalid_path_handling - Failed: DID NOT RAISE ...
+================== 2 failed, 11 passed, 5 deselected in 0.78s ==================
 
 
 
 
 
 =====================================================================
-************* Module agent-aider-worktree
-agent-aider-worktree.py:434:4: E0001: Parsing failed: 'invalid syntax (agent-aider-worktree, line 434)' (syntax-error)
+************* Module test_cli
+tests/test_cli.py:11:0: C0413: Import "import pytest" should be placed at the top of the module (wrong-import-position)
+tests/test_cli.py:13:0: C0413: Import "from agent_aider_worktree.cli import setup_arg_parser" should be placed at the top of the module (wrong-import-position)
+tests/test_cli.py:14:0: C0413: Import "from agent_aider_worktree.core import create_worktree, merge_and_push" should be placed at the top of the module (wrong-import-position)
 ************* Module test_readme
-tests/test_readme.py:48:0: C0303: Trailing whitespace (trailing-whitespace)
-tests/test_readme.py:63:0: C0303: Trailing whitespace (trailing-whitespace)
-tests/test_readme.py:51:15: E0602: Undefined variable 're' (undefined-variable)
+tests/test_readme.py:1:0: R0801: Similar lines in 2 files
+==agent-aider-worktree:[71:103]
+==agent_aider_worktree.core:[68:89]
+    repo_name = get_repo_name(repo_path)
+    worktree_base = os.path.expanduser(f"~/worktrees/{repo_name}")
 
-------------------------------------------------------------------
-Your code has been rated at 6.25/10 (previous run: 7.81/10, -1.56)
+    # Create the base directory if it doesn't exist
+    os.makedirs(worktree_base, exist_ok=True)
+
+    # Create a sanitized directory name from the task
+    safe_task_name = "".join(c if c.isalnum() else "_" for c in task_name)
+    safe_task_name = safe_task_name[:50]  # Limit length
+
+    # Add timestamp to make it unique
+    timestamp = time.strftime("%Y%m%d_%H%M%S")
+    worktree_path = os.path.join(worktree_base, f"{safe_task_name}_{timestamp}")
+
+    # Get the current branch
+    result = run_command("git branch --show-current", cwd=repo_path)
+    current_branch = result.stdout.strip()
+
+    # Create a new branch for the task
+    branch_name = f"task/{safe_task_name}_{timestamp}"
+    console.print(f"[bold green]Creating new branch:[/bold green] {branch_name}")
+    run_command(f"git branch {branch_name}", cwd=repo_path)
+
+    # Create the worktree
+    console.print(f"[bold green]Creating worktree at:[/bold green] {worktree_path}")
+    run_command(f"git worktree add {worktree_path} {branch_name}", cwd=repo_path)
+
+    return worktree_path, branch_name, current_branch
+
+
+def run_tests(worktree_path):
+    """Run pytest and return True if all tests pass.""" (duplicate-code)
+tests/test_readme.py:1:0: R0801: Similar lines in 2 files
+==agent-aider-worktree:[493:502]
+==agent_aider_worktree.cli:[8:17]
+    parser = argparse.ArgumentParser(
+        description="Create git worktree, run AI-assisted coding until tests pass",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  %(prog)s "Add user authentication feature"
+  %(prog)s -p /path/to/repo "Fix bug in login form"
+  %(prog)s --model claude-3-opus "Implement new feature"
+  %(prog)s --inner-loop 5 "Refactor database code" (duplicate-code)
+tests/test_readme.py:1:0: R0801: Similar lines in 2 files
+==agent-aider-worktree:[39:46]
+==agent_aider_worktree.core:[47:54]
+            result = subprocess.run(
+                cmd,
+                cwd=cwd,
+                shell=True,
+                text=True,
+                capture_output=capture_output,
+                check=check, (duplicate-code)
+tests/test_readme.py:1:0: R0801: Similar lines in 2 files
+==agent-aider-worktree:[103:116]
+==agent_aider_worktree.core:[27:36]
+    console.print(Panel("[bold]Running Tests[/bold]", style="blue"))
+    result = run_command("pytest", cwd=worktree_path, check=False)
+    if result.returncode == 0:
+        console.print(Panel("[bold]All Tests Passed![/bold]", style="green"))
+    else:
+        console.print(Panel("[bold]Tests Failed[/bold]", style="red"))
+    return result.returncode == 0
+
+ (duplicate-code)
+tests/test_readme.py:1:0: R0801: Similar lines in 2 files
+==agent-aider-worktree:[401:408]
+==agent_aider_worktree.core:[134:140]
+        result = run_command(
+            f"git checkout {main_branch} && git merge {branch_name} && git push",
+            cwd=main_repo_path,
+            check=False,
+        )
+        if result.returncode != 0: (duplicate-code)
+
+-------------------------------------------------------------------
+Your code has been rated at 9.86/10 (previous run: 10.00/10, -0.14)
 
 Focus on code that causes this test to fail: 
 
@@ -76,10 +193,203 @@ Focus on fixing the linting issues
 
 # Test files content:
 
+# test_cli.py
+"""Test cases for CLI functionality"""
+
+import argparse
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+import pytest
+
+from agent_aider_worktree.cli import setup_arg_parser
+from agent_aider_worktree.core import create_worktree, merge_and_push
+
+
+def test_arg_parser_valid_arguments():
+    """Test argument parser with valid inputs"""
+    parser = setup_arg_parser()
+    # Test valid arguments
+    args = parser.parse_args(
+        ["test task", "--path", "/tmp", "--model", "claude-3-opus"]
+    )
+    assert args.task == "test task"
+    assert args.path == "/tmp"
+    assert args.model == "claude-3-opus"
+    assert args.no_push is False
+    assert args.max_iterations == 10
+
+
+def test_arg_parser_invalid_arguments():
+    """Test argument parser with invalid inputs"""
+    parser = setup_arg_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args([])  # Missing required task argument
+
+
+def test_cli_help_output():
+    """Test the help output contains required information"""
+    result = subprocess.run(
+        ["./agent-aider-worktree.py", "--help"],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    help_output = result.stdout
+
+    assert "Create git worktree" in help_output
+    assert "--path" in help_output
+    assert "--model" in help_output
+    assert "examples" in help_output.lower()
+
+
+def test_main_execution_with_help():
+    """Test main execution with --help flag"""
+    result = subprocess.run(
+        ["./agent-aider-worktree.py", "--help"],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "Create git worktree" in result.stdout
+
+
+def test_create_worktree_directory_creation(mocker, tmp_path):
+    """Test worktree directory creation logic"""
+    mocker.patch("agent_aider_worktree.core.run_command")
+    test_repo = tmp_path / "testrepo"
+    test_repo.mkdir()
+
+    (test_repo / ".git").mkdir()  # Create fake git repo
+
+    worktree_path, branch_name, main_branch = create_worktree(
+        str(test_repo), "test task"
+    )
+
+    assert "test_task" in worktree_path
+    assert "test_task" in branch_name
+    assert main_branch  # Should get current branch name
+
+
+def test_merge_and_push_logic(mocker):
+    """Test merge and push workflow"""
+    mock_run = mocker.patch("subprocess.run")
+    mocker.patch("os.path.exists", return_value=True)
+
+    # Mock successful merge
+    mock_run.return_value.returncode = 0
+    # Include task in mock args
+    mock_args = argparse.Namespace(task="test task", model="r1")
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
+
+    # Mock failed merge
+    mock_run.return_value.returncode = 1
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is False
+
+
+def test_file_inclusion_logic():
+    """Test file inclusion arguments work as expected"""
+    parser = setup_arg_parser()
+
+    # Test --all-files
+    args = parser.parse_args(["task", "--all-files"])
+    assert args.all_files is True
+
+    # Test --no-python-files
+    args = parser.parse_args(["task", "--no-python-files"])
+    assert args.no_python_files is True
+
+
+def test_invalid_model_handling():
+    """Test handling of invalid model names"""
+    parser = setup_arg_parser()
+    with pytest.raises(SystemExit):
+        parser.parse_args(["test task", "--model", "invalid-model"])
+
+
+def test_invalid_path_handling():
+    """Test handling of non-existent paths"""
+    parser = setup_arg_parser()
+    with pytest.raises(SystemExit):
+        # Should raise error when path doesn't exist
+        parser.parse_args(["test task", "--path", "/non/existent/path"])
+
+
+def test_edge_cases():
+    """Test edge case handling"""
+    parser = setup_arg_parser()
+
+    # Test very long task description
+    long_task = "a" * 1000
+    args = parser.parse_args([long_task])
+    assert args.task == long_task
+
+    # Test special characters in task
+    special_task = "Fix $weird & characters! #123"
+    args = parser.parse_args([special_task])
+    assert args.task == special_task
+
+
+def test_worktree_creation_with_special_chars(mocker):
+    """Test worktree creation with special characters in task name"""
+    mocker.patch("agent_aider_worktree.core.run_command")
+
+    test_repo = "/tmp/testrepo"
+    os.makedirs(test_repo, exist_ok=True)
+    os.makedirs(os.path.join(test_repo, ".git"), exist_ok=True)
+
+    task = "Test @#$%^&*()_+-=[]{}|;':,./<>?"
+    worktree_path, branch_name, _ = create_worktree(test_repo, task)
+
+    assert "test_" in worktree_path.lower()
+    assert "test_" in branch_name.lower()
+
+
+def test_merge_conflict_resolution(mocker):
+    """Test merge conflict resolution workflow"""
+    mock_run = mocker.patch("subprocess.run")
+    mocker.patch("os.path.exists", return_value=True)
+    # Simulate merge conflict then resolution
+    mock_run.side_effect = [
+        # Checkout main
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Pull main
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Pull worktree
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # First merge attempt fails
+        subprocess.CompletedProcess(args=[], returncode=1, stdout="merge conflict", stderr=""),
+        # Conflict resolution
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="merged", stderr=""),
+        # Status check
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Push branch
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Final merge
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+    ]
+
+    mock_args = argparse.Namespace(task="test task", model="r1")
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
+
 # test_readme.py
 """Test cases for README.md validation"""
 
+import argparse
+import re
+import subprocess
+import sys
 from pathlib import Path
+from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 def test_readme_exists():
@@ -111,6 +421,8 @@ def test_readme_installation_instructions():
 
 def test_readme_usage_section_formatting():
     """Verify usage section has proper code formatting with valid examples"""
+    # Check README exists first
+    assert Path("README.md").exists()
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
 
@@ -121,10 +433,8 @@ def test_readme_usage_section_formatting():
     bash_blocks = [block for block in code_blocks if block.startswith("bash")]
     assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
     # Check for required command patterns in bash blocks
-    required_patterns = [
-        r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"
-    ]
-    
+    required_patterns = [r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"]
+
     pattern_found = False
     for block in bash_blocks:
         if any(re.search(pattern, block) for pattern in required_patterns):
@@ -139,5 +449,104 @@ def test_readme_usage_section_formatting():
             assert (
                 len(block.split()) >= 2
             ), f"Command should include a task argument: {block}"
-    
-    assert pattern_found, "Missing valid example command in bash code blocks of usage section"
+
+    assert (
+        pattern_found
+    ), "Missing valid example command in bash code blocks of usage section"
+
+
+def test_help_output_examples():
+    """Test that the help output contains valid examples"""
+    result = subprocess.run(
+        ["./agent-aider-worktree.py", "--help"],
+        check=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    help_output = result.stdout
+
+    # Verify example commands exist and are properly formatted
+    # Get actual examples from help output
+    examples_section = help_output.split("Examples:")[1]
+    examples = [
+        line.strip()
+        for line in examples_section.split("\n")
+        if line.strip() and not line.startswith("%")
+    ]
+    # Verify exact match of expected examples
+    expected_examples = [
+        'agent-aider-worktree.py "Add user authentication feature"',
+        'agent-aider-worktree.py -p /path/to/repo "Fix bug in login form"',
+        'agent-aider-worktree.py --model claude-3-opus "Implement new feature"',
+        'agent-aider-worktree.py --inner-loop 5 "Refactor database code"',
+    ]
+    assert examples == expected_examples, "Help examples don't match expected output"
+
+    for example in examples:
+        assert example in help_output, f"Missing example in help output: {example}"
+
+    # Verify command format with different arguments
+    assert re.search(
+        r"agent-aider-worktree\.py --model [\w-]+ \"[\w\s]+\"", help_output
+    )  # pylint: disable=line-too-long
+    assert re.search(
+        r"agent-aider-worktree\.py -p \S+ \"\w+.*\"", help_output
+    )  # pylint: disable=line-too-long
+
+
+def test_arg_parser_configuration():
+    """Test that all command-line arguments are properly configured"""
+    # Create parser from main script
+    parser = setup_arg_parser()
+
+    # Test basic parser configuration
+    assert isinstance(
+        parser, argparse.ArgumentParser
+    ), "setup_arg_parser should return an ArgumentParser instance"
+    assert parser.description.startswith(
+        "Create git worktree"
+    ), "Missing correct description"
+    assert parser.epilog, "Missing examples section in epilog"
+
+    # Test task argument configuration
+    def get_argument(parser, dest_name):
+        """Helper to safely get an argument by its dest name"""
+        for action in parser._actions:  # pylint: disable=protected-access
+            if action.dest == dest_name:
+                return action
+        raise AssertionError(f"Argument with dest '{dest_name}' not found")
+
+    # Verify task argument is positional and required
+    task_arg = get_argument(parser, "task")
+    assert task_arg.required, "Task argument should be required"
+    assert not task_arg.option_strings, "Task argument should be positional"
+    assert (
+        task_arg.help == "The task description to pass to aider"
+    ), "Incorrect help message"
+
+    # Verify path argument configuration
+    path_arg = get_argument(parser, "path")
+    assert path_arg.default == ".", "Default path should be current directory"
+    assert callable(path_arg.type), "Path argument should have validation function"
+    assert "-p" in path_arg.option_strings, "Missing short option for path"
+    assert "--path" in path_arg.option_strings, "Missing long option for path"
+
+    # Verify model argument configuration
+    model_arg = get_argument(parser, "model")
+    assert model_arg.default == "r1", "Incorrect default model"
+    assert (
+        model_arg.help == "Model to use with aider (default: r1)"
+    ), "Incorrect help message"
+
+    # Verify max iterations configuration
+    max_iter_arg = get_argument(parser, "max_iterations")
+    assert max_iter_arg.default == 10, "Incorrect default max iterations"
+    assert max_iter_arg.type == int, "Max iterations should be integer type"
+    assert (
+        "--max-iterations" in max_iter_arg.option_strings
+    ), "Missing long option for max iterations"
+
+    # Verify boolean flags
+    no_push_arg = get_argument(parser, "no_push")
+    assert no_push_arg.action == "store_true", "no_push should be a boolean flag"

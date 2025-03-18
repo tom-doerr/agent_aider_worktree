@@ -15,7 +15,7 @@ def get_repo_name(repo_path):
     result = run_command("git remote get-url origin", cwd=repo_path)
     if result.returncode != 0:
         return "unknown_repo"
-    
+
     remote_url = result.stdout.strip()
     # Handle SSH URLs that start with git@
     if remote_url.startswith("git@"):
