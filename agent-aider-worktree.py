@@ -431,13 +431,13 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
 
-6. Fix line length issues and string formatting:
-
-agent-aider-worktree.py
-```python
-<<<<<<< SEARCH
+    console.print(
+        Panel.fit(
+            "[bold cyan]Agent Aider Worktree[/bold cyan]\n"
             "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
-        console.print(
+            border_style="blue",
+        )
+    )
             "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
         )
         sys.exit(0)
