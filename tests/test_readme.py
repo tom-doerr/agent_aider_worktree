@@ -1,6 +1,11 @@
 """Test cases for README.md validation"""
 
+import re
+import subprocess
 from pathlib import Path
+
+import pytest
+import requests
 
 
 def test_readme_exists():
