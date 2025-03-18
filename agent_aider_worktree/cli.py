@@ -1,6 +1,7 @@
 """CLI configuration for Agent Aider Worktree"""
 
 import argparse
+import os
 
 
 def setup_arg_parser() -> argparse.ArgumentParser:
@@ -22,7 +23,8 @@ Examples:
         "-p",
         "--path",
         default=".",
-        type=lambda p: p if os.path.exists(p) else argparse.ArgumentTypeError(f"Path {p} does not exist"),
+        type=lambda p: (p if os.path.exists(p) else 
+                        argparse.ArgumentTypeError(f"Path {p} does not exist")),
         help="Path to the main git repository (default: current directory)",
     )
     parser.add_argument(
