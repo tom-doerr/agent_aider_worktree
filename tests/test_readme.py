@@ -5,7 +5,7 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from agent_aider_worktree.cli import setup_arg_parser
+from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -167,4 +167,4 @@ def test_arg_parser_configuration():
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
-    assert isinstance(no_push_arg, argparse._StoreTrueAction), "no_push should be a boolean flag"
+    assert isinstance(no_push_arg, argparse._StoreTrueAction), "no_push should be a boolean flag"  # pylint: disable=protected-access

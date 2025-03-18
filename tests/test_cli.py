@@ -6,8 +6,8 @@ from pathlib import Path
 import argparse
 import subprocess
 import pytest
-from agent_aider_worktree.cli import setup_arg_parser
-from agent_aider_worktree.core import create_worktree, merge_and_push
+from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
+from agent_aider_worktree.core import create_worktree, merge_and_push  # pylint: disable=import-error
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 

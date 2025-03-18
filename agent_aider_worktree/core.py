@@ -83,7 +83,7 @@ def create_worktree(repo_path, task_name):
     return worktree_path, branch_name, current_branch
 
 
-def run_aider(worktree_path, task, _args, _model="r1"):
+def run_aider(worktree_path, task, args, model="r1"):  # pylint: disable=unused-argument
     """Run aider with the given task."""
     console.print(Panel(f"[bold]Running aider with task:[/bold]\n{task}", style="cyan"))
     # Actual implementation from agent-aider-worktree.py would go here
