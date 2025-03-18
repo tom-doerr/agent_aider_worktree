@@ -10,7 +10,7 @@ from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-
 from agent_aider_worktree.core import (
     create_worktree,
     merge_and_push,
-)  # pylint: disable=import-error
+)
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
