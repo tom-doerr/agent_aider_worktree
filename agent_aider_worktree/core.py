@@ -9,6 +9,7 @@ from rich.panel import Panel
 
 console = Console()
 
+
 def get_repo_name(repo_path):
     """Get the repository name from the git remote URL."""
     result = run_command("git remote get-url origin", cwd=repo_path)
@@ -18,6 +19,7 @@ def get_repo_name(repo_path):
     remote_url = result.stdout.strip()
     repo_name = remote_url.split("/")[-1].replace(".git", "")
     return repo_name
+
 
 def run_tests(worktree_path):
     """Run pytest and return True if all tests pass."""
@@ -29,11 +31,14 @@ def run_tests(worktree_path):
         console.print(Panel("[bold]Tests Failed[/bold]", style="red"))
     return result.returncode == 0
 
+
 class CommandResult(NamedTuple):
     """Result container for command execution outcomes"""
+
     returncode: int
     stdout: str
     stderr: str
+
 
 def run_command(cmd, cwd=None, capture_output=True, check=True, env=None):
     """Run a shell command and return the result."""
@@ -48,9 +53,7 @@ def run_command(cmd, cwd=None, capture_output=True, check=True, env=None):
             env=env or os.environ.copy(),
         )
         return CommandResult(
-            result.returncode,
-            result.stdout.strip(),
-            result.stderr.strip()
+            result.returncode, result.stdout.strip(), result.stderr.strip()
         )
     except subprocess.CalledProcessError as e:
         console.print(f"[bold red]Command failed:[/bold red] {cmd}")
@@ -87,6 +90,7 @@ def run_aider(worktree_path, task, _args, _model="r1"):
     # Placeholder implementation for testing:
     console.print("[dim]Mocking aider execution[/dim]")
     return True
+
 
 def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args):
     """Merge changes from main, then push if no conflicts."""

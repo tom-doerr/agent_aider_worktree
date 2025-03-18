@@ -2,6 +2,7 @@
 
 import argparse
 
+
 def setup_arg_parser() -> argparse.ArgumentParser:
     """Create and configure the argument parser"""
     parser = argparse.ArgumentParser(
