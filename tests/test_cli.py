@@ -1,6 +1,7 @@
 """Test cases for CLI functionality"""
 import sys
-from pathlib import Path argparse argparse
+from pathlib import Path
+import argparse
 import subprocess
 import pytest
 
