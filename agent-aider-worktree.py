@@ -563,6 +563,12 @@ Examples:
 
                 if merge_success:
                     total_time = str(datetime.now() - start_time).split(".")[0]
+                    # Show final diff
+                    console.print(Panel("[bold]Final Changes Diff[/bold]", style="blue"))
+                    diff_result = run_command("git diff --cached", cwd=worktree_path, capture_output=False)
+                    if diff_result.stdout:
+                        console.print(Panel(diff_result.stdout, title="Complete Diff", style="dim"))
+                    
                     console.print(
                         Panel(
                             f"[bold]Task completed successfully in {iteration} iterations![/bold]\n"
@@ -570,6 +576,7 @@ Examples:
                             style="green",
                         )
                     )
+                    console.print(f"[dim]{'=' * 50}[/dim]")
                     break
                 else:
                     console.print(
