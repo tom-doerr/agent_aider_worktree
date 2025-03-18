@@ -431,8 +431,6 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
 
-```python
-<<<<<<< SEARCH
             "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
         )
     )

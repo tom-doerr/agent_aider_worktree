@@ -1,7 +1,10 @@
 """Test cases for README.md validation"""
 
 import re
+import subprocess
+import argparse
 from pathlib import Path
+from agent_aider_worktree import main
 
 
 def test_readme_exists():
@@ -98,7 +101,7 @@ def test_arg_parser_configuration():
     """Test that all command-line arguments are properly configured"""
     # Create parser from main script
     parser = argparse.ArgumentParser()
-    main.setup_arg_parser(parser)  # Assuming setup_arg_parser exists
+    main.setup_arg_parser(parser)
 
     # Verify required positional argument (pylint: disable=protected-access)
     assert (
