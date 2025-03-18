@@ -37,11 +37,14 @@ Key features:
 Example workflow:
 ```bash
 # Create a new feature branch
-aaw "Add user authentication feature"
+agent-aider-worktree "Add user authentication feature"
 
-# Fix existing code
-aaw "Repair broken login form validation"
+# Fix existing code (using shorter alias)
+agent-aider-worktree --model claude-3-opus "Repair broken login form validation"
 ```
+
+> [!NOTE]
+> You can use `aaw` as a shortcut alias for `agent-aider-worktree` after installation
 
 ## Examples
 

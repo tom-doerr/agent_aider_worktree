@@ -32,6 +32,9 @@ def test_readme_installation_instructions():
 
 def test_readme_usage_section_formatting():
     """Verify usage section has proper code formatting with valid examples"""
+    # Check README exists first
+    assert Path("README.md").exists()
+    
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
 
