@@ -26,7 +26,7 @@ Requirements:
 ## Usage
 
 ```bash
-agent-aider-worktree "Your task description here"
+agent_aider_worktree.py "Your task description here"
 ```
 
 Key features:
@@ -50,12 +50,12 @@ agent-aider-worktree --model claude-3-opus "Repair broken login form validation"
 
 Create a new feature:
 ```bash
-agent-aider-worktree "Add user authentication system"
+agent_aider_worktree.py "Add user authentication system"
 ```
 
 Fix a bug:
 ```bash
-agent-aider-worktree "Fix login form validation bug"
+agent_aider_worktree.py "Fix login form validation bug"
 ```
 
 ## Testing
@@ -84,7 +84,7 @@ MIT License - See [LICENSE](LICENSE) for details
 
 Configure through command line options:
 ```bash
-agent-aider-worktree --model claude-3-opus --max-iterations 5 "Refactor database layer"
+agent_aider_worktree.py --model claude-3-opus --max-iterations 5 "Refactor database layer"
 ```
 
 Common options:
