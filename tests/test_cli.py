@@ -5,10 +5,11 @@ from pathlib import Path
 import argparse
 import subprocess
 import pytest
-from agent_aider_worktree.cli import setup_arg_parser
-from agent_aider_worktree.core import create_worktree, merge_and_push
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from agent_aider_worktree.cli import setup_arg_parser
+from agent_aider_worktree.core import create_worktree, merge_and_push
 
 
 def test_arg_parser_valid_arguments():

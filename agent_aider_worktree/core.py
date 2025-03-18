@@ -3,10 +3,36 @@
 import os
 import time
 import subprocess
+import shutil
+import random
+from datetime import datetime
 from typing import NamedTuple
 from rich.console import Console
+from rich.panel import Panel
 
 console = Console()
+
+def get_repo_name(repo_path):
+    """Get the repository name from the git remote URL."""
+    result = run_command("git remote get-url origin", cwd=repo_path)
+    if result.returncode != 0:
+        return "unknown_repo"
+
+    remote_url = result.stdout.strip()
+    repo_name = remote_url.split("/")[-1].replace(".git", "")
+    return repo_name
+
+def run_tests(worktree_path):
+    """Run pytest and return True if all tests pass."""
+    console.print(Panel("[bold]Running Tests[/bold]", style="blue"))
+    result = run_command("pytest", cwd=worktree_path, check=False)
+    
+    if result.returncode == 0:
+        console.print(Panel("[bold]All Tests Passed![/bold]", style="green"))
+    else:
+        console.print(Panel("[bold]Tests Failed[/bold]", style="red"))
+    
+    return result.returncode == 0
 
 class CommandResult(NamedTuple):
     """Result container for command execution outcomes"""
@@ -59,9 +85,16 @@ def create_worktree(repo_path, task_name):
     return worktree_path, branch_name, current_branch
 
 
+def run_aider(worktree_path, task, args, model="r1"):
+    """Run aider with the given task."""
+    console.print(Panel(f"[bold]Running aider with task:[/bold]\n{task}", style="cyan"))
+    # Actual implementation from agent-aider-worktree.py would go here
+    # Placeholder implementation for testing:
+    console.print("[dim]Mocking aider execution[/dim]")
+    return True
+
 def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args):
     """Merge changes from main, then push if no conflicts."""
-    # (Keep the exact same implementation as in agent-aider-worktree.py)
     try:
         run_command(f"git checkout {main_branch}", cwd=main_repo_path)
         run_command("git pull", cwd=main_repo_path)
@@ -100,6 +133,6 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
         if result.returncode != 0:
             return False
         return True
-    except Exception as e:
+    except subprocess.CalledProcessError as e:
         console.print(f"[bold red]Error during merge:[/bold red] {str(e)}")
         return False

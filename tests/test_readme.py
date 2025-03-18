@@ -3,14 +3,12 @@
 import argparse
 import re
 import subprocess
-from pathlib import Path
-import argparse
-import re
-import subprocess
 import sys
-from agent_aider_worktree.cli import setup_arg_parser
+from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+from agent_aider_worktree.cli import setup_arg_parser
 
 
 def test_readme_exists():
