@@ -598,6 +598,7 @@ Examples:
                     console.print(
                         Panel(
                             f"[bold]Task completed successfully in {iteration} iterations![/bold]\n"
+                            f"Task: {args.task}\n"
                             f"Total time: {total_time}",
                             style="green",
                         )
