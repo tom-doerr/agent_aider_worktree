@@ -10,8 +10,8 @@ import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent_aider_worktree.cli import setup_arg_parser
-from agent_aider_worktree.core import create_worktree, merge_and_push
+from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=wrong-import-position
+from agent_aider_worktree.core import create_worktree, merge_and_push  # pylint: disable=wrong-import-position
 
 
 def test_arg_parser_valid_arguments():
