@@ -1,13 +1,13 @@
 """Test cases for CLI functionality"""
 
-import sys
+import argparse
 import os
+import subprocess
+import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import argparse
-import subprocess
 import pytest
 from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
 from agent_aider_worktree.core import (
