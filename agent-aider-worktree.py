@@ -112,7 +112,7 @@ def run_tests(worktree_path):
     return result.returncode == 0
 
 
-def generate_context(worktree_path, args):
+def generate_context(worktree_path):
     """Generate context.txt with test results and linting information."""
     console.print(Panel("[bold]Generating context.txt[/bold]", style="blue"))
     context_file = os.path.join(worktree_path, "context.txt")
@@ -180,7 +180,8 @@ def generate_context(worktree_path, args):
         # Add focus directive
         focus_options = ["Focus on fixing the linting issues", "Focus on fixing bugs"]
 
-        focus_choice = random.choice(focus_options) if focus_options else "Focus on code quality improvements"
+        focus_choice = (random.choice(focus_options) 
+                      if focus_options else "Focus on code quality improvements")
         f.write(f"\n{focus_choice}\n")
 
         # Add test files content if they exist
@@ -342,7 +343,8 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             or "fix conflicts" in status.stdout
         ):
             console.print(
-                "[bold red]Merge conflicts detected. Running aider to resolve conflicts...[/bold red]"
+                "[bold red]Merge conflicts detected. "
+                "Running aider to resolve conflicts...[/bold red]"
             )
 
             # Run aider to resolve conflicts
@@ -351,7 +353,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
                 f"Look at the git status output and fix the conflicts. "
                 f"Original task: {task}"
             )
-            run_aider(worktree_path, conflict_task, args, model=args.model)
+            run_aider(worktree_path, conflict_task, args.model)
 
             # Check if conflicts were resolved
             status = run_command("git status", cwd=worktree_path)
@@ -372,12 +374,13 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
         tests_pass = run_tests(worktree_path)
         if not tests_pass:
             console.print(
-                "[bold yellow]Tests failed after merge. Running aider to fix issues...[/bold yellow]"
+                "[bold yellow]Tests failed after merge. "
+                "Running aider to fix issues...[/bold yellow]"
             )
             fix_task = (
                 f"Fix the failing tests after merging with main. Original task: {task}"
             )
-            run_aider(worktree_path, fix_task, args, model=args.model)
+            run_aider(worktree_path, fix_task, args.model)
 
             # Check if tests pass now
             tests_pass = run_tests(worktree_path)
@@ -410,7 +413,8 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             return False
 
         console.print(
-            f"[bold green]Successfully merged {branch_name} into {main_branch} and pushed![/bold green]"
+            f"[bold green]Merged {branch_name} into {main_branch} "
+            "and pushed successfully![/bold green]"
         )
         return True
     except Exception as e:  # pylint: disable=broad-except
@@ -535,7 +539,8 @@ Examples:
 
         console.print(
             Panel(
-                f"[bold]Iteration {iteration}/{args.max_iterations}[/bold]\nTotal time: {elapsed_str}",
+                f"[bold]Iteration {iteration}/{args.max_iterations}[/bold]\n"
+                f"Total time: {elapsed_str}",
                 style="blue",
             )
         )
@@ -550,7 +555,7 @@ Examples:
                 pass  # Empty the file
 
         # Generate context file
-        generate_context(worktree_path)
+        generate_context(worktree_path, args)
 
         # Run aider
         console.print(
@@ -575,6 +580,7 @@ Examples:
                 )
 
                 if merge_success:
+                    # Show success message
                     total_time = str(datetime.now() - start_time).split(".", 1)[0]
                     # Show final diff
                     console.print(
@@ -607,8 +613,9 @@ Examples:
                     if iteration > args.max_iterations:
                         console.print(
                             Panel(
-                                f"[bold]Reached maximum number of iterations ({args.max_iterations})[/bold]\n"
-                                f"Total time spent: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
+                                "[bold]Reached maximum iterations "
+                                f"({args.max_iterations})[/bold]\n"
+                                f"Total time: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
                                 "Exiting without completing the task.",
                                 style="red",
                             )
@@ -616,7 +623,7 @@ Examples:
                         break
                     continue
             else:
-                total_time = str(datetime.now() - start_time).split(".")[0]
+                total_time = str(datetime.now() - start_time).split(".", 1)[0]
                 console.print(
                     Panel(
                         f"[bold]Task completed successfully in {iteration} iterations![/bold]\n"
@@ -632,8 +639,9 @@ Examples:
             if iteration > args.max_iterations:
                 console.print(
                     Panel(
-                        f"[bold]Reached maximum number of iterations ({args.max_iterations})[/bold]\n"
-                        f"Total time spent: {str(datetime.now() - start_time).split('.')[0]}\n"
+                        "[bold]Reached maximum iterations "
+                        f"({args.max_iterations})[/bold]\n"
+                        f"Total time: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
                         "Exiting without completing the task.",
                         style="red",
                     )
