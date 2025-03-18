@@ -31,10 +31,10 @@ Examples:
         help="Don't push changes back to main repository",
     )
     parser.add_argument(
-        "--model", 
+        "--model",
         default="r1",
         choices=["r1", "claude-3-opus"],
-        help="Model to use with aider (default: r1)"
+        help="Model to use with aider (default: r1)",
     )
     parser.add_argument(
         "--max-iterations",

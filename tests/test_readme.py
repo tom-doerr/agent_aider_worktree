@@ -167,4 +167,6 @@ def test_arg_parser_configuration():
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
-    assert isinstance(no_push_arg, argparse._StoreTrueAction), "no_push should be a boolean flag"  # pylint: disable=protected-access
+    assert isinstance(
+        no_push_arg, argparse._StoreTrueAction
+    ), "no_push should be a boolean flag"  # pylint: disable=protected-access

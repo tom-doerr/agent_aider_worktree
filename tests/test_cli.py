@@ -7,7 +7,10 @@ import argparse
 import subprocess
 import pytest
 from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
-from agent_aider_worktree.core import create_worktree, merge_and_push  # pylint: disable=import-error
+from agent_aider_worktree.core import (
+    create_worktree,
+    merge_and_push,
+)  # pylint: disable=import-error
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
@@ -16,7 +19,9 @@ def test_arg_parser_valid_arguments():
     """Test argument parser with valid inputs"""
     parser = setup_arg_parser()
     # Test valid arguments
-    args = parser.parse_args(["test task", "--path", "/tmp", "--model", "claude-3-opus"])
+    args = parser.parse_args(
+        ["test task", "--path", "/tmp", "--model", "claude-3-opus"]
+    )
     assert args.task == "test task"
     assert args.path == "/tmp"
     assert args.model == "claude-3-opus"
