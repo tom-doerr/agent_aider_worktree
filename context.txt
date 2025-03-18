@@ -1,4 +1,4 @@
-=============2025-03-18 12:54:18===================
+=============2025-03-18 13:02:04===================
 
 /home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
@@ -16,7 +16,7 @@ timeout method: signal
 timeout func_only: False
 collected 2 items / 2 deselected / 0 selected
 
-============================ 2 deselected in 0.18s =============================
+============================ 2 deselected in 0.19s =============================
 
 
 
@@ -31,7 +31,7 @@ Your code has been rated at 4.44/10 (previous run: 4.44/10, +0.00)
 
 Focus on code that causes this test to fail: 
 
-Focus on fixing bugs
+Focus on fixing the linting issues
 
 
 # Test files content:
