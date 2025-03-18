@@ -379,7 +379,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
                 "Running aider to fix issues...[/bold yellow]"
             )
             fix_task = (
-                f"Fix the failing tests after merging with main. Original task: {task}"
+                f"Fix the failing tests after merging with main. Original task: {args.task}"
             )
             run_aider(worktree_path, fix_task, args, model=args.model)
 
@@ -632,7 +632,6 @@ Examples:
 
                 if merge_success:
                     # Show success message
-                    # Show success message
                     total_time = str(datetime.now() - start_time).split(".", 1)[0]
                     # Show final diff
                     console.print(
@@ -674,7 +673,6 @@ Examples:
                     )
                     break
                 continue
-            else:
                 total_time = str(datetime.now() - start_time).split(".", 1)[0]
                 console.print(
                     Panel(
