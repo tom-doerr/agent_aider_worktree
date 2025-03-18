@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(0, str(Path(__file__).parent.parent))
 from agent_aider_worktree import (
     setup_arg_parser,
-)  # pylint: disable=import-error,wrong-import-position
+)
 
 
 def test_arg_parser_valid_arguments():
