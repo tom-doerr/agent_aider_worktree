@@ -12,9 +12,15 @@ Agent Aider Worktree is a CLI tool that manages git worktrees with AI-assisted d
 
 ## Installation
 
+Install using pip:
+
 ```bash
 pip install agent-aider-worktree
 ```
+
+Requirements:
+- Python 3.11+
+- git 2.20+
 
 ## Usage
 

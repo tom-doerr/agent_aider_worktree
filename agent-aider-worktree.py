@@ -437,12 +437,8 @@ agent-aider-worktree.py
 ```python
 <<<<<<< SEARCH
             "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
-        console.print(
-            "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
         )
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, signal_handler)
+    )
 
     console.print(
         Panel.fit(
