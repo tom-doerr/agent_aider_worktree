@@ -63,7 +63,6 @@ def test_create_worktree_directory_creation(mocker, tmp_path):
 
     (test_repo / ".git").mkdir()  # Create fake git repo
 
-
     worktree_path, branch_name, main_branch = create_worktree(
         str(test_repo), "test task"
     )
@@ -77,7 +76,6 @@ def test_merge_and_push_logic(mocker):
     """Test merge and push workflow"""
     mock_run = mocker.patch("subprocess.run")
     mocker.patch("os.path.exists", return_value=True)
-
 
     # Mock successful merge
     mock_run.return_value.returncode = 0
