@@ -1,6 +1,6 @@
 # Agent Aider Worktree
 
-A CLI tool to manage git worktrees with AI-assisted development workflow using aider.
+**A CLI tool:** Manage git worktrees with AI-assisted development workflow using aider.
 
 ## Features
 
@@ -33,6 +33,20 @@ Fix a bug:
 ```bash
 agent-aider-worktree "Fix login form validation bug"
 ```
+
+## Testing
+
+Run the test suite with:
+
+```bash
+python3.11 -m pytest tests/ -v
+```
+
+Tests include:
+- README validation
+- Worktree creation and management
+- Branch naming conventions
+- Conflict resolution handling
 
 ## Configuration
 
