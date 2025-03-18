@@ -2,9 +2,8 @@
 
 import re
 import subprocess
-import argparse
 from pathlib import Path
-from agent_aider_worktree import main, setup_arg_parser  # pylint: disable=import-error
+from agent_aider_worktree import setup_arg_parser  # pylint: disable=import-error
 
 
 def test_readme_exists():
