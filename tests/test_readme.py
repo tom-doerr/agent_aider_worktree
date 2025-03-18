@@ -97,43 +97,47 @@ def test_help_output_examples():
     assert re.search(r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output)
 
 
-def test_setup_arg_parser_exists():
-    """Test that setup_arg_parser exists and returns a parser"""
-    parser = setup_arg_parser()
-    assert isinstance(
-        parser, argparse.ArgumentParser
-    ), "setup_arg_parser should return an ArgumentParser instance"
-
-
 def test_arg_parser_configuration():
     """Test that all command-line arguments are properly configured"""
     # Create parser from main script
     parser = setup_arg_parser()
 
-    # Verify required positional argument (pylint: disable=protected-access)
-    assert (
-        "task" in parser._positionals._actions[1].dest
-    )  # pylint: disable=protected-access
-    assert parser._positionals._actions[1].required  # pylint: disable=protected-access
+    # Test basic parser configuration
+    assert isinstance(
+        parser, argparse.ArgumentParser
+    ), "setup_arg_parser should return an ArgumentParser instance"
+    assert parser.description.startswith("Create git worktree"), "Missing correct description"
+    assert parser.epilog, "Missing examples section in epilog"
 
-    # Verify path argument
-    path_arg = [a for a in parser._actions if a.dest == "path"][
-        0
-    ]  # pylint: disable=protected-access
-    assert path_arg.default == "."
-    assert (
-        path_arg.help == "Path to the main git repository (default: current directory)"
-    )
+    # Test task argument configuration
+    """Test that all command-line arguments are properly configured"""
+    # Create parser from main script
+    parser = setup_arg_parser()
 
-    # Verify model argument
-    model_arg = [a for a in parser._actions if a.dest == "model"][
-        0
-    ]  # pylint: disable=protected-access
-    assert model_arg.default == "r1"
+    # Verify task argument is positional and required
+    task_arg = [a for a in parser._actions if a.dest == "task"][0]
+    assert task_arg.required, "Task argument should be required"
+    assert not task_arg.option_strings, "Task argument should be positional"
+    assert task_arg.help == "The task description to pass to aider", "Incorrect help message"
 
-    # Verify max iterations
-    max_iter_arg = [a for a in parser._actions if a.dest == "max_iterations"][
-        0
-    ]  # pylint: disable=protected-access
-    assert max_iter_arg.default == 10
-    assert max_iter_arg.type == int
+    # Verify path argument configuration
+    path_arg = [a for a in parser._actions if a.dest == "path"][0]
+    assert path_arg.default == ".", "Default path should be current directory"
+    assert path_arg.type == str, "Path argument should be string type"
+    assert "-p" in path_arg.option_strings, "Missing short option for path"
+    assert "--path" in path_arg.option_strings, "Missing long option for path"
+
+    # Verify model argument configuration
+    model_arg = [a for a in parser._actions if a.dest == "model"][0]
+    assert model_arg.default == "r1", "Incorrect default model"
+    assert model_arg.help == "Model to use with aider (default: r1)", "Incorrect help message"
+
+    # Verify max iterations configuration
+    max_iter_arg = [a for a in parser._actions if a.dest == "max_iterations"][0]
+    assert max_iter_arg.default == 10, "Incorrect default max iterations"
+    assert max_iter_arg.type == int, "Max iterations should be integer type"
+    assert "--max-iterations" in max_iter_arg.option_strings, "Missing long option for max iterations"
+
+    # Verify boolean flags
+    no_push_arg = [a for a in parser._actions if a.dest == "no_push"][0]
+    assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
