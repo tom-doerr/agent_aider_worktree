@@ -48,6 +48,14 @@ Tests include:
 - Branch naming conventions
 - Conflict resolution handling
 
+## Contributing
+
+Contributions are welcome! Please open an issue first to discuss proposed changes.
+
+## License
+
+MIT License - See [LICENSE](LICENSE) for details
+
 ## Configuration
 
 Configure through command line options:
