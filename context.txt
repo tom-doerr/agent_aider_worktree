@@ -1,4 +1,4 @@
-=============2025-03-18 17:15:28===================
+=============2025-03-18 17:37:13===================
 
 /home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
@@ -6,7 +6,7 @@ The event loop scope for asynchronous fixtures will default to the fixture cachi
   warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
 ============================= test session starts ==============================
 platform linux -- Python 3.11.10, pytest-8.3.4, pluggy-1.5.0
-testmon: changed files: tests/test_cli.py, tests/test_readme.py, unchanged files: 2, environment: default
+testmon: changed files: tests/test_cli.py, tests/test_core.py, unchanged files: 3, environment: default
 Test order randomisation NOT enabled. Enable with --random-order or --random-order-bucket=<bucket_type>
 rootdir: /home/tom/worktrees/agent_aider_worktree/please_add_tests_20250318_124846
 plugins: mock-3.14.0, asyncio-0.24.0, testmon-2.1.3, anyio-4.9.0, timeout-2.3.1, repeat-0.9.3, xdist-3.6.1, cov-6.0.0, flake8-1.3.0, hypothesis-6.121.2, random-order-1.1.1, pylint-0.21.0
@@ -14,85 +14,32 @@ asyncio: mode=Mode.STRICT, default_loop_scope=None
 timeout: 10.0s
 timeout method: signal
 timeout func_only: False
-collected 18 items / 5 deselected / 13 selected
+collected 26 items / 16 deselected / 10 selected
 
-tests/test_readme.py F                                                   [  7%]
-tests/test_cli.py ...F........                                           [100%]
+tests/test_core.py ..F.....                                              [ 80%]
+tests/test_cli.py ..                                                     [100%]
 
 =================================== FAILURES ===================================
-________________________ test_arg_parser_configuration _________________________
+_____________________ test_get_repo_name_empty_remote_url ______________________
 
-    def test_arg_parser_configuration():
-        """Test that all command-line arguments are properly configured"""
-        # Create parser from main script
-        parser = setup_arg_parser()
-    
-        # Test basic parser configuration
-        assert isinstance(
-            parser, argparse.ArgumentParser
-        ), "setup_arg_parser should return an ArgumentParser instance"
-        assert parser.description.startswith(
-            "Create git worktree"
-        ), "Missing correct description"
-        assert parser.epilog, "Missing examples section in epilog"
-    
-        # Test task argument configuration
-        def get_argument(parser, dest_name):
-            """Helper to safely get an argument by its dest name"""
-            for action in parser._actions:  # pylint: disable=protected-access
-                if action.dest == dest_name:
-                    return action
-            raise AssertionError(f"Argument with dest '{dest_name}' not found")
-    
-        # Verify task argument is positional and required
-        task_arg = get_argument(parser, "task")
-        assert task_arg.required, "Task argument should be required"
-        assert not task_arg.option_strings, "Task argument should be positional"
-        assert (
-            task_arg.help == "The task description to pass to aider"
-        ), "Incorrect help message"
-    
-        # Verify path argument configuration
-        path_arg = get_argument(parser, "path")
-        assert path_arg.default == ".", "Default path should be current directory"
-        assert callable(path_arg.type), "Path argument should have validation function"
-        assert "-p" in path_arg.option_strings, "Missing short option for path"
-        assert "--path" in path_arg.option_strings, "Missing long option for path"
-    
-        # Verify model argument configuration
-        model_arg = get_argument(parser, "model")
-        assert model_arg.default == "r1", "Incorrect default model"
-        assert (
-            model_arg.help == "Model to use with aider (default: r1)"
-        ), "Incorrect help message"
-    
-        # Verify max iterations configuration
-        max_iter_arg = get_argument(parser, "max_iterations")
-        assert max_iter_arg.default == 10, "Incorrect default max iterations"
-        assert max_iter_arg.type == int, "Max iterations should be integer type"
-        assert (
-            "--max-iterations" in max_iter_arg.option_strings
-        ), "Missing long option for max iterations"
-    
-        # Verify boolean flags
-        no_push_arg = get_argument(parser, "no_push")
->       assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
-E       AttributeError: '_StoreTrueAction' object has no attribute 'action'
+mocker = <pytest_mock.plugin.MockerFixture object at 0x7fb07e331cd0>
 
-tests/test_readme.py:170: AttributeError
-__________________________ test_invalid_path_handling __________________________
+    def test_get_repo_name_empty_remote_url(mocker):
+        """Test repo name fallback when remote URL is empty"""
+        mock_result = Mock()
+        mock_result.returncode = 0
+        mock_result.stdout = ""
+        mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+        repo_name = get_repo_name("/fake/path")
+>       assert repo_name == "unknown_repo"
+E       AssertionError: assert '' == 'unknown_repo'
+E         
+E         - unknown_repo
 
-    def test_invalid_path_handling():
-        """Test handling of non-existent paths"""
-        parser = setup_arg_parser()
->       with pytest.raises(SystemExit):
-E       Failed: DID NOT RAISE <class 'SystemExit'>
-
-tests/test_cli.py:124: Failed
+tests/test_core.py:66: AssertionError
 =========================== short test summary info ============================
-FAILED tests/test_readme.py::test_arg_parser_configuration - AttributeError: ...
-FAILED tests/test_cli.py::test_invalid_path_handling - Failed: DID NOT RAISE ...
-================== 2 failed, 11 passed, 5 deselected in 0.78s ==================
+FAILED tests/test_core.py::test_get_repo_name_empty_remote_url - AssertionErr...
+================== 1 failed, 9 passed, 16 deselected in 0.31s ==================
 
 
 
@@ -101,12 +48,12 @@ FAILED tests/test_cli.py::test_invalid_path_handling - Failed: DID NOT RAISE ...
 =====================================================================
 ************* Module test_cli
 tests/test_cli.py:11:0: C0413: Import "import pytest" should be placed at the top of the module (wrong-import-position)
-tests/test_cli.py:13:0: C0413: Import "from agent_aider_worktree.cli import setup_arg_parser" should be placed at the top of the module (wrong-import-position)
-tests/test_cli.py:14:0: C0413: Import "from agent_aider_worktree.core import create_worktree, merge_and_push" should be placed at the top of the module (wrong-import-position)
+tests/test_cli.py:12:0: C0413: Import "from agent_aider_worktree.cli import setup_arg_parser" should be placed at the top of the module (wrong-import-position)
+tests/test_cli.py:13:0: C0413: Import "from agent_aider_worktree.core import create_worktree, merge_and_push" should be placed at the top of the module (wrong-import-position)
 ************* Module test_readme
 tests/test_readme.py:1:0: R0801: Similar lines in 2 files
 ==agent-aider-worktree:[71:103]
-==agent_aider_worktree.core:[68:89]
+==agent_aider_worktree.core:[69:90]
     repo_name = get_repo_name(repo_path)
     worktree_base = os.path.expanduser(f"~/worktrees/{repo_name}")
 
@@ -153,7 +100,7 @@ Examples:
   %(prog)s --inner-loop 5 "Refactor database code" (duplicate-code)
 tests/test_readme.py:1:0: R0801: Similar lines in 2 files
 ==agent-aider-worktree:[39:46]
-==agent_aider_worktree.core:[47:54]
+==agent_aider_worktree.core:[48:55]
             result = subprocess.run(
                 cmd,
                 cwd=cwd,
@@ -163,19 +110,23 @@ tests/test_readme.py:1:0: R0801: Similar lines in 2 files
                 check=check, (duplicate-code)
 tests/test_readme.py:1:0: R0801: Similar lines in 2 files
 ==agent-aider-worktree:[103:116]
-==agent_aider_worktree.core:[27:36]
+==agent_aider_worktree.core:[28:37]
     console.print(Panel("[bold]Running Tests[/bold]", style="blue"))
     result = run_command("pytest", cwd=worktree_path, check=False)
+
     if result.returncode == 0:
         console.print(Panel("[bold]All Tests Passed![/bold]", style="green"))
     else:
         console.print(Panel("[bold]Tests Failed[/bold]", style="red"))
+
     return result.returncode == 0
 
- (duplicate-code)
+
+def generate_context(worktree_path):
+    """Generate context.txt with test results and linting information.""" (duplicate-code)
 tests/test_readme.py:1:0: R0801: Similar lines in 2 files
 ==agent-aider-worktree:[401:408]
-==agent_aider_worktree.core:[134:140]
+==agent_aider_worktree.core:[135:141]
         result = run_command(
             f"git checkout {main_branch} && git merge {branch_name} && git push",
             cwd=main_repo_path,
@@ -183,15 +134,96 @@ tests/test_readme.py:1:0: R0801: Similar lines in 2 files
         )
         if result.returncode != 0: (duplicate-code)
 
--------------------------------------------------------------------
-Your code has been rated at 9.86/10 (previous run: 10.00/10, -0.14)
+------------------------------------------------------------------
+Your code has been rated at 9.87/10 (previous run: 9.85/10, +0.02)
 
 Focus on code that causes this test to fail: 
 
-Focus on fixing the linting issues
+Focus on fixing bugs
 
 
 # Test files content:
+
+# test_core.py
+"""Test cases for core functionality"""
+
+import sys
+from pathlib import Path
+from unittest.mock import Mock
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
+# pylint: disable-next=wrong-import-position,import-error
+from agent_aider_worktree.core import get_repo_name, run_command
+
+
+def test_get_repo_name_ssh_url(mocker):
+    """Test repo name extraction from SSH URL"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "git@github.com:testuser/test-repo.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "test-repo"
+
+
+def test_get_repo_name_https_url(mocker):
+    """Test repo name extraction from HTTPS URL"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "https://github.com/testuser/https-repo.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "https-repo"
+
+
+def test_get_repo_name_failure(mocker):
+    """Test repo name fallback when command fails"""
+    mock_result = Mock()
+    mock_result.returncode = 1
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "unknown_repo"
+
+def test_get_repo_name_ssh_url_with_subgroups(mocker):
+    """Test repo name extraction from SSH URL with subgroups"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "git@gitlab.com:mygroup/subgroup/myrepo.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "myrepo"
+
+def test_get_repo_name_https_url_with_www(mocker):
+    """Test repo name extraction from HTTPS URL with www"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "https://www.github.com/orgname/reponame.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "reponame"
+
+def test_get_repo_name_empty_remote_url(mocker):
+    """Test repo name fallback when remote URL is empty"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = ""
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "unknown_repo"
+
+
+def test_run_command_success():
+    """Test successful command execution"""
+    result = run_command("echo 'test'", cwd="/tmp")
+    assert result.returncode == 0
+    assert "test" in result.stdout
+
+
+def test_run_command_failure():
+    """Test failed command execution"""
+    result = run_command("exit 1", cwd="/tmp", check=False)
+    assert result.returncode == 1
 
 # test_cli.py
 """Test cases for CLI functionality"""
@@ -205,7 +237,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
-
 from agent_aider_worktree.cli import setup_arg_parser
 from agent_aider_worktree.core import create_worktree, merge_and_push
 
@@ -365,7 +396,9 @@ def test_merge_conflict_resolution(mocker):
         # Pull worktree
         subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
         # First merge attempt fails
-        subprocess.CompletedProcess(args=[], returncode=1, stdout="merge conflict", stderr=""),
+        subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="merge conflict", stderr=""
+        ),
         # Conflict resolution
         subprocess.CompletedProcess(args=[], returncode=0, stdout="merged", stderr=""),
         # Status check
@@ -549,4 +582,6 @@ def test_arg_parser_configuration():
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
-    assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
+    assert (
+        no_push_arg.__class__.__name__ == "_StoreTrueAction"
+    ), "no_push should be a boolean flag"

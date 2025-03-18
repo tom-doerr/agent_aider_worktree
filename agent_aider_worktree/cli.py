@@ -24,8 +24,11 @@ Examples:
         "--path",
         default=".",
         type=lambda p: (
-            os.path.abspath(p) if os.path.exists(p) else
-            (_ for _ in ()).throw(argparse.ArgumentTypeError(f"Path {p} does not exist"))
+            os.path.abspath(p)
+            if os.path.exists(p)
+            else (_ for _ in ()).throw(
+                argparse.ArgumentTypeError(f"Path {p} does not exist")
+            )
         ),
         help="Path to the main git repository (default: current directory)",
     )

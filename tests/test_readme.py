@@ -167,4 +167,6 @@ def test_arg_parser_configuration():
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
-    assert no_push_arg.__class__.__name__ == "_StoreTrueAction", "no_push should be a boolean flag"
+    assert (
+        no_push_arg.__class__.__name__ == "_StoreTrueAction"
+    ), "no_push should be a boolean flag"
