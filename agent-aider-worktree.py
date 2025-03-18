@@ -378,9 +378,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
                 "[bold yellow]Tests failed after merge. "
                 "Running aider to fix issues...[/bold yellow]"
             )
-            fix_task = (
-                f"Fix the failing tests after merging with main. Original task: {args.task}"
-            )
+            fix_task = f"Fix the failing tests after merging with main. Original task: {args.task}"
             run_aider(worktree_path, fix_task, args, model=args.model)
 
             # Check if tests pass now
