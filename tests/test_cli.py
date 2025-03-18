@@ -5,8 +5,10 @@ import os
 import subprocess
 import sys
 from pathlib import Path
-sys.path.insert(0, str(Path(__file__).parent.parent))
 import pytest
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=wrong-import-position
 from agent_aider_worktree.core import create_worktree, merge_and_push  # pylint: disable=wrong-import-position
 
