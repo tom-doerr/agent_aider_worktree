@@ -2,11 +2,38 @@
 
 import os
 import time
-from datetime import datetime
 import subprocess
 from rich.console import Console
+from typing import NamedTuple
 
 console = Console()
+
+class CommandResult(NamedTuple):
+    returncode: int
+    stdout: str
+    stderr: str
+
+def run_command(cmd, cwd=None, capture_output=True, check=True, env=None):
+    """Run a shell command and return the result."""
+    try:
+        result = subprocess.run(
+            cmd,
+            cwd=cwd,
+            shell=True,
+            text=True,
+            capture_output=capture_output,
+            check=check,
+            env=env or os.environ.copy(),
+        )
+        return CommandResult(
+            result.returncode,
+            result.stdout.strip(),
+            result.stderr.strip()
+        )
+    except subprocess.CalledProcessError as e:
+        console.print(f"[bold red]Command failed:[/bold red] {cmd}")
+        console.print(f"[red]Error:[/red] {e.stderr}")
+        return CommandResult(e.returncode, e.stdout, e.stderr)
 
 
 def create_worktree(repo_path, task_name):
