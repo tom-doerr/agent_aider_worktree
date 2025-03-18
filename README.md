@@ -12,6 +12,14 @@ A CLI tool to manage git worktrees with AI-assisted development workflow using a
 
 ## Installation
 
+### Using Poetry (recommended)
+```bash
+git clone https://github.com/yourusername/agent-aider-worktree.git
+cd agent-aider-worktree
+poetry install
+```
+
+### PyPI Installation
 ```bash
 pip install agent-aider-worktree
 ```
@@ -51,4 +59,5 @@ Common options:
 
 - Python 3.11+
 - git 2.20+
+- Poetry 1.8+
 - aider (installed automatically with package)

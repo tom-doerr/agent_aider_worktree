@@ -1,0 +1,36 @@
+[tool.poetry]
+name = "agent-aider-worktree"
+version = "0.1.0"
+description = "A CLI tool for managing git worktrees with AI-assisted development workflows"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+license = "MIT"
+packages = [{include = "agent_aider_worktree", from = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aider-chat = ">=0.10.0"
+rich = ">=13.0.0"
+python-dotenv = ">=1.0.0"
+
+[tool.poetry.group.dev.dependencies]
+pytest = ">=8.0.0"
+pylint = ">=3.0.0"
+pytest-cov = ">=4.0.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.pytest]
+pythonpath = ["src"]
+
+[tool.pylint.MASTER]
+extension-pkg-whitelist = ["rich"]
+
+[tool.pylint.BASIC]
+good-names = ["cli", "cmd", "cwd", "env", "repo_path", "worktree_path", "args"]
+
+[tool.pylint.DESIGN]
+max-args = 10
+max-locals = 15]

@@ -14,4 +14,5 @@ def test_readme_contents():
     assert len(readme) >= 500, "README.md seems too short"
     assert "# Agent Aider Worktree" in readme, "Missing main header in README.md"
     assert "## Installation" in readme, "Missing Installation section in README.md"
+    assert "## Poetry Installation" in readme, "Missing Poetry installation instructions"
     assert "## Usage" in readme, "Missing Usage section in README.md"
