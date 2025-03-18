@@ -146,7 +146,7 @@ def test_arg_parser_configuration():
     # Verify path argument configuration
     path_arg = get_argument(parser, "path")
     assert path_arg.default == ".", "Default path should be current directory"
-    assert path_arg.type == str, "Path argument should be string type"
+    assert callable(path_arg.type), "Path argument should have validation function"
     assert "-p" in path_arg.option_strings, "Missing short option for path"
     assert "--path" in path_arg.option_strings, "Missing long option for path"
 

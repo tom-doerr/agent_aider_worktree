@@ -9,12 +9,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
 import pytest
-
-from agent_aider_worktree.cli import setup_arg_parser  # pylint: disable=import-error
-from agent_aider_worktree.core import (
-    create_worktree,
-    merge_and_push,
-)
+from agent_aider_worktree.cli import setup_arg_parser
+from agent_aider_worktree.core import create_worktree, merge_and_push
 
 
 def test_arg_parser_valid_arguments():
@@ -55,12 +51,17 @@ def test_cli_help_output():
     assert "examples" in help_output.lower()
 
 
-def test_main_execution_with_help(capsys):
+def test_main_execution_with_help():
     """Test main execution with --help flag"""
-    with pytest.raises(SystemExit):
-        subprocess.run(["./agent-aider-worktree.py", "--help"], check=False)
-    captured = capsys.readouterr()
-    assert "Create git worktree" in captured.out
+    result = subprocess.run(
+        ["./agent-aider-worktree.py", "--help"],
+        check=False,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+    )
+    assert result.returncode == 0
+    assert "Create git worktree" in result.stdout
 
 
 def test_create_worktree_directory_creation(mocker, tmp_path):
@@ -119,7 +120,7 @@ def test_invalid_model_handling():
 def test_invalid_path_handling():
     """Test handling of non-existent paths"""
     parser = setup_arg_parser()
-    with pytest.raises(argparse.ArgumentTypeError):
+    with pytest.raises(SystemExit):
         # Should raise error when path doesn't exist
         parser.parse_args(["test task", "--path", "/non/existent/path"])
 
@@ -160,14 +161,22 @@ def test_merge_conflict_resolution(mocker):
     mocker.patch("os.path.exists", return_value=True)
     # Simulate merge conflict then resolution
     mock_run.side_effect = [
+        # Checkout main
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Pull main
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Pull worktree
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
         # First merge attempt fails
-        subprocess.CompletedProcess(
-            args=[], returncode=1, stdout="merge conflict", stderr=""
-        ),
+        subprocess.CompletedProcess(args=[], returncode=1, stdout="merge conflict", stderr=""),
         # Conflict resolution
         subprocess.CompletedProcess(args=[], returncode=0, stdout="merged", stderr=""),
-        # Successful push
-        subprocess.CompletedProcess(args=[], returncode=0, stdout="pushed", stderr=""),
+        # Status check
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Push branch
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Final merge
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
     ]
 
     mock_args = argparse.Namespace(task="test task", model="r1")
