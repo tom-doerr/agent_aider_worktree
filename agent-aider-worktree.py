@@ -352,7 +352,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
             conflict_task = (
                 f"Please resolve the merge conflicts in this repository. "
                 f"Look at the git status output and fix the conflicts. "
-                f"Original task: {task}"
+                f"Original task: {args.task}"
             )
             run_aider(worktree_path, conflict_task, args, model=args.model)
 
@@ -425,17 +425,8 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
 
 def setup_arg_parser():
     """Create and configure the argument parser"""
-    parser = argparse.ArgumentParser(
-        description="Create git worktree, run AI-assisted coding until tests pass",
-        formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
-  %(prog)s "Add user authentication feature"
-  %(prog)s -p /path/to/repo "Fix bug in login form"
-  %(prog)s --model claude-3-opus "Implement new feature"
-  %(prog)s --inner-loop 5 "Refactor database code"
-        """,
-    )
+    # Reuse the arg parser from setup_arg_parser()
+    parser = setup_arg_parser()
 
     parser.add_argument("task", help="The task description to pass to aider")
     parser.add_argument(

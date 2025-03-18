@@ -72,7 +72,7 @@ def test_readme_usage_section_formatting():
 def test_help_output_examples():
     """Test that the help output contains valid examples"""
     result = subprocess.run(
-        ["agent-aider-worktree.py", "--help"],
+        ["agent_aider_worktree.py", "--help"],
         check=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
