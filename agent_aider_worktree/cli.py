@@ -23,7 +23,9 @@ Examples:
         "-p",
         "--path",
         default=".",
-        type=lambda p: os.path.abspath(p) if os.path.exists(p) else argparse.ArgumentTypeError(f"Path {p} does not exist"),
+        type=lambda p: os.path.abspath(p) \
+            if os.path.exists(p) \
+            else argparse.ArgumentTypeError(f"Path {p} does not exist"),
         help="Path to the main git repository (default: current directory)",
     )
     parser.add_argument(
