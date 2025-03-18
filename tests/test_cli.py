@@ -112,11 +112,13 @@ def test_invalid_model_handling():
     with pytest.raises(SystemExit):
         parser.parse_args(["test task", "--model", "invalid-model"])
 
+
 def test_invalid_path_handling():
     """Test handling of non-existent paths"""
     parser = setup_arg_parser()
     with pytest.raises(SystemExit):
         parser.parse_args(["test task", "--path", "/non/existent/path"])
+
 
 def test_edge_cases():
     """Test edge case handling"""
