@@ -323,9 +323,7 @@ def run_aider(worktree_path, task, args, model="r1"):
     )
 
 
-def merge_and_push(
-    worktree_path, main_repo_path, branch_name, main_branch, task, model
-):
+def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args):
     """Merge changes from main, then push if no conflicts."""
     try:
         # First pull latest changes from main branch
@@ -356,7 +354,7 @@ def merge_and_push(
                 f"Look at the git status output and fix the conflicts. "
                 f"Original task: {task}"
             )
-            run_aider(worktree_path, conflict_task, model=model)
+            run_aider(worktree_path, conflict_task, args, model=args.model)
 
             # Check if conflicts were resolved
             status = run_command("git status", cwd=worktree_path)
@@ -383,7 +381,7 @@ def merge_and_push(
             fix_task = (
                 f"Fix the failing tests after merging with main. Original task: {task}"
             )
-            run_aider(worktree_path, fix_task, model=model)
+            run_aider(worktree_path, fix_task, args, model=args.model)
 
             # Check if tests pass now
             tests_pass = run_tests(worktree_path)
@@ -637,8 +635,7 @@ Examples:
                     main_repo_path,
                     branch_name,
                     main_branch,
-                    args.task,
-                    args.model,
+                    args,
                 )
 
                 if merge_success:
@@ -668,24 +665,23 @@ Examples:
                     )
                     console.print(f"[dim]{'=' * 50}[/dim]")
                     break
-                else:
+                console.print(
+                    "[yellow]Merge conflicts detected. "
+                    "Running aider again to resolve conflicts...[/yellow]"
+                )
+                iteration += 1
+                if iteration > args.max_iterations:
                     console.print(
-                        "[yellow]Merge conflicts detected. "
-                        "Running aider again to resolve conflicts...[/yellow]"
-                    )
-                    iteration += 1
-                    if iteration > args.max_iterations:
-                        console.print(
-                            Panel(
-                                "[bold]Reached maximum iterations "
-                                f"({args.max_iterations})[/bold]\n"
-                                f"Total time: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
-                                "Exiting without completing the task.",
-                                style="red",
-                            )
+                        Panel(
+                            "[bold]Reached maximum iterations "
+                            f"({args.max_iterations})[/bold]\n"
+                            f"Total time: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
+                            "Exiting without completing the task.",
+                            style="red",
                         )
-                        break
-                    continue
+                    )
+                    break
+                continue
             else:
                 total_time = str(datetime.now() - start_time).split(".", 1)[0]
                 console.print(
