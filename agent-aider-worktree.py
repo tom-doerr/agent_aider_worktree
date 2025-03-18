@@ -322,7 +322,7 @@ def run_aider(worktree_path, task, args, model="r1"):
     )
 
 
-def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task):
+def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task, model):
     """Merge changes from main, then push if no conflicts."""
     try:
         # First pull latest changes from main branch
@@ -353,7 +353,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
                 f"Look at the git status output and fix the conflicts. "
                 f"Original task: {task}"
             )
-            run_aider(worktree_path, conflict_task, model=args.model)
+            run_aider(worktree_path, conflict_task, model=model)
 
             # Check if conflicts were resolved
             status = run_command("git status", cwd=worktree_path)
@@ -380,7 +380,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             fix_task = (
                 f"Fix the failing tests after merging with main. Original task: {task}"
             )
-            run_aider(worktree_path, fix_task, model=args.model)
+            run_aider(worktree_path, fix_task, model=model)
 
             # Check if tests pass now
             tests_pass = run_tests(worktree_path)
@@ -576,10 +576,11 @@ Examples:
             if not args.no_push:
                 # Try to merge and push
                 merge_success = merge_and_push(
-                    worktree_path, main_repo_path, branch_name, main_branch, args.task
+                    worktree_path, main_repo_path, branch_name, main_branch, args.task, args.model
                 )
 
                 if merge_success:
+                    # Show success message
                     # Show success message
                     total_time = str(datetime.now() - start_time).split(".", 1)[0]
                     # Show final diff
