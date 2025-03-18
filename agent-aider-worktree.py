@@ -438,19 +438,6 @@ def main():
             border_style="blue",
         )
     )
-            "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
-        )
-        sys.exit(0)
-
-    signal.signal(signal.SIGINT, signal_handler)
-
-    console.print(
-        Panel.fit(
-            "[bold cyan]Agent Aider Worktree[/bold cyan]\n"
-            "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
-            border_style="blue",
-        )
-    )
 
     parser = argparse.ArgumentParser(
         description="Create git worktree, run AI-assisted coding until tests pass",
