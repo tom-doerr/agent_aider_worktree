@@ -42,14 +42,13 @@ def test_readme_usage_section_formatting():
     bash_blocks = [block for block in code_blocks if block.startswith("bash")]
     assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
     # Check for required command in any of the bash blocks
-    command_found = any(
-        "agent-aider-worktree.py" in block 
-        for block in bash_blocks
-    )
+    command_found = any("agent-aider-worktree.py" in block for block in bash_blocks)
     assert command_found, "Missing example command in bash code blocks of usage section"
     # Verify command formatting in first bash block
     first_bash_block = bash_blocks[0]
-    assert "agent-aider-worktree" in first_bash_block, \
-        "Missing agent-aider-worktree command in first bash example"
-    assert '"' in first_bash_block or "'" in first_bash_block, \
-        "Task argument should be properly quoted in example command"
+    assert (
+        "agent-aider-worktree" in first_bash_block
+    ), "Missing agent-aider-worktree command in first bash example"
+    assert (
+        '"' in first_bash_block or "'" in first_bash_block
+    ), "Task argument should be properly quoted in example command"
