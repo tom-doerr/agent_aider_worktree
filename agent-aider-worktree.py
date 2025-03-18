@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
+"""Agent Aider Worktree - Automated code improvement with git worktrees and AI assistance"""
+
+# pylint: disable=invalid-name,too-many-locals,too-many-statements,too-many-branches
 
 import argparse
 import os
+import random
+import shutil
+import signal
 import subprocess
 import sys
 import time
-from pathlib import Path
 from datetime import datetime
+from pathlib import Path
 
 from rich.console import Console
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn, TimeElapsedColumn
-from rich.text import Text
 from rich.table import Table
 
 # Initialize Rich console
@@ -115,7 +120,7 @@ def generate_context(worktree_path):
     context_tmp = os.path.join(worktree_path, "context.txt.tmp")
 
     # Use a Python context manager to handle file operations
-    with open(context_tmp, "w") as f:
+    with open(context_tmp, "w", encoding="utf-8") as f:
         # Start with date header
         f.write(
             f"============={datetime.now().strftime('%Y-%m-%d %H:%M:%S')}===================\n\n"
@@ -199,8 +204,15 @@ def generate_context(worktree_path):
     console.print("[dim]Context file generated[/dim]")
 
 
-def run_aider(worktree_path, task, args, model="r1", inner_loop_count=3):
-    """Run aider with the given task."""
+def run_aider(worktree_path, task, args, model="r1"):
+    """Run aider with the given task.
+    
+    Args:
+        worktree_path: Path to git worktree
+        task: Task description for AI
+        args: Command line arguments
+        model: AI model to use
+    """
     console.print(Panel(f"[bold]Running aider with task:[/bold]\n{task}", style="cyan"))
 
     # Check for instruction file in dotfiles
@@ -236,7 +248,7 @@ def run_aider(worktree_path, task, args, model="r1", inner_loop_count=3):
     weak_model = "openrouter/google/gemini-2.0-flash-001"
 
     # Using subprocess.run directly to allow interactive session
-    console.print(f"[bold yellow]Starting aider session...[/bold yellow]")
+    console.print("[bold yellow]Starting aider session...[/bold yellow]")
 
     # Get repository files without listing them
     result = run_command("git ls-files", cwd=worktree_path)
@@ -306,9 +318,9 @@ def run_aider(worktree_path, task, args, model="r1", inner_loop_count=3):
 
     # Run aider with proper environment
     console.print(f"[dim]Running aider in {worktree_path}[/dim]")
-    subprocess.run(aider_cmd, cwd=worktree_path, shell=True, text=True)
+    subprocess.run(aider_cmd, cwd=worktree_path, shell=True, text=True, check=False)
 
-    console.print(f"[bold yellow]Aider session completed[/bold yellow]")
+    console.print("[bold yellow]Aider session completed[/bold yellow]")
     console.print(
         f"[dim]{'=' * 50} {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} {'=' * 50}[/dim]"
     )
@@ -402,7 +414,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             f"[bold green]Successfully merged {branch_name} into {main_branch} and pushed![/bold green]"
         )
         return True
-    except Exception as e:
+    except Exception as e:  # pylint: disable=broad-except
         console.print(f"[bold red]Error during merge and push:[/bold red] {str(e)}")
         return False
 
@@ -411,7 +423,16 @@ def main():
     # Set up signal handlers for graceful exit
     import signal
 
-    def signal_handler(sig, frame):
+    def signal_handler(_sig, _frame):
+>>>>>>>LLACE
+```
+
+6. Fix line length issues and string formatting:
+
+agent-aider-worktree.py
+```python
+<<<<<<< SEARCH
+            "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
         console.print(
             "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
         )
@@ -428,7 +449,7 @@ def main():
     )
 
     parser = argparse.ArgumentParser(
-        description="Create a git worktree and run aider until tests pass, then merge back to main.",
+        description="Create git worktree, run AI-assisted coding until tests pass",
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
@@ -519,7 +540,7 @@ Examples:
     while iteration <= args.max_iterations:
         # Calculate elapsed time
         elapsed_time = datetime.now() - start_time
-        elapsed_str = str(elapsed_time).split(".")[0]  # Remove microseconds
+        elapsed_str = str(elapsed_time).split(".", maxsplit=1)[0]  # Remove microseconds
 
         console.print(
             Panel(
@@ -534,7 +555,8 @@ Examples:
             console.print(
                 "[dim]Clearing previous chat history for new iteration...[/dim]"
             )
-            open(history_file, "w").close()  # Empty the file
+            with open(history_file, "w", encoding="utf-8"):
+                pass  # Empty the file
 
         # Generate context file
         generate_context(worktree_path)
