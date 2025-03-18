@@ -112,6 +112,8 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
                 f"Please resolve the merge conflicts. Original task: {args.task}"
             )
             run_aider(worktree_path, conflict_task, args, model=args.model)
+            run_command("git add .", cwd=worktree_path)
+            run_command("git commit -m 'Resolve merge conflicts'", cwd=worktree_path)
             status = run_command("git status", cwd=worktree_path)
             if (
                 "You have unmerged paths" in status.stdout

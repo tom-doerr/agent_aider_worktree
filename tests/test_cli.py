@@ -117,7 +117,7 @@ def test_invalid_model_handling():
 def test_invalid_path_handling():
     """Test handling of non-existent paths"""
     parser = setup_arg_parser()
-    with pytest.raises(SystemExit):
+    with pytest.raises(argparse.ArgumentTypeError):
         parser.parse_args(["test task", "--path", "/non/existent/path"])
 
 
@@ -158,11 +158,11 @@ def test_merge_conflict_resolution(mocker):
     # Simulate merge conflict then resolution
     mock_run.side_effect = [
         # First merge attempt fails
-        subprocess.CompletedProcess(args=[], returncode=1, stdout="", stderr=""),
+        subprocess.CompletedProcess(args=[], returncode=1, stdout="", stderr="", env={}),
         # Conflict resolution
-        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr="", env={}),
         # Successful push
-        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr="", env={}),
     ]
 
     mock_args = argparse.Namespace(task="test task", model="r1")

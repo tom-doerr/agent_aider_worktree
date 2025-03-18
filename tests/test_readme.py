@@ -106,10 +106,10 @@ def test_help_output_examples():
 
     # Verify command format with different arguments
     assert re.search(
-        r"agent-aider-worktree --model \w+ \"\w+.*\"", help_output
+        r"agent-aider-worktree\.py --model \w+ \"\w+.*\"", help_output
     )  # pylint: disable=line-too-long
     assert re.search(
-        r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output
+        r"agent-aider-worktree\.py -p \S+ \"\w+.*\"", help_output
     )  # pylint: disable=line-too-long
 
 
