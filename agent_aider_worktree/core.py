@@ -8,6 +8,7 @@ from rich.console import Console
 
 console = Console()
 
+
 def create_worktree(repo_path, task_name):
     """Create a new git worktree for the task."""
     # (Keep the exact same implementation as in agent-aider-worktree.py)
@@ -29,6 +30,7 @@ def create_worktree(repo_path, task_name):
     run_command(f"git worktree add {worktree_path} {branch_name}", cwd=repo_path)
     return worktree_path, branch_name, current_branch
 
+
 def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args):
     """Merge changes from main, then push if no conflicts."""
     # (Keep the exact same implementation as in agent-aider-worktree.py)
@@ -37,12 +39,20 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
         run_command("git pull", cwd=main_repo_path)
         run_command(f"git pull origin {main_branch}", cwd=worktree_path, check=False)
         status = run_command("git status", cwd=worktree_path)
-        if "You have unmerged paths" in status.stdout or "fix conflicts" in status.stdout:
+        if (
+            "You have unmerged paths" in status.stdout
+            or "fix conflicts" in status.stdout
+        ):
             console.print("[bold red]Merge conflicts detected...[/bold red]")
-            conflict_task = f"Please resolve the merge conflicts. Original task: {args.task}"
+            conflict_task = (
+                f"Please resolve the merge conflicts. Original task: {args.task}"
+            )
             run_aider(worktree_path, conflict_task, args, model=args.model)
             status = run_command("git status", cwd=worktree_path)
-            if "You have unmerged paths" in status.stdout or "fix conflicts" in status.stdout:
+            if (
+                "You have unmerged paths" in status.stdout
+                or "fix conflicts" in status.stdout
+            ):
                 console.print("[bold red]Merge conflicts unresolved[/bold red]")
                 return False
         run_command("git commit -am 'Merge from main'", cwd=worktree_path, check=False)

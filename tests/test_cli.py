@@ -84,15 +84,11 @@ def test_merge_and_push_logic(mocker):
     mock_run.return_value.returncode = 0
     # Include task in mock args
     mock_args = argparse.Namespace(task="test task")
-    assert (
-        merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
-    )
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
 
     # Mock failed merge
     mock_run.return_value.returncode = 1
-    assert (
-        merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is False
-    )
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is False
 
 
 def test_file_inclusion_logic():
