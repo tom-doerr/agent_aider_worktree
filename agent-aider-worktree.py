@@ -428,7 +428,8 @@ def main():
             "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
         )
         sys.exit(0)
-```
+
+    signal.signal(signal.SIGINT, signal_handler)
 
 6. Fix line length issues and string formatting:
 
