@@ -6,8 +6,6 @@ from unittest.mock import Mock
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-import pytest
-
 from agent_aider_worktree.core import get_repo_name, run_command
 
 def test_get_repo_name_ssh_url(mocker):
