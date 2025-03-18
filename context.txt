@@ -1,111 +1,100 @@
-=============2025-03-18 11:59:07===================
+=============2025-03-18 12:21:51===================
 
-No tests directory found
+/home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
+The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
+
+  warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
+============================= test session starts ==============================
+platform linux -- Python 3.11.10, pytest-8.3.4, pluggy-1.5.0
+testmon: new DB, environment: default
+We'd like to hear from testmon users! Please go to https://testmon.org/survey to leave feedback.
+Test order randomisation NOT enabled. Enable with --random-order or --random-order-bucket=<bucket_type>
+rootdir: /home/tom/worktrees/agent_aider_worktree/please_create_the_structure_for_a_poetry_package_20250318_122151
+plugins: mock-3.14.0, asyncio-0.24.0, testmon-2.1.3, anyio-4.9.0, timeout-2.3.1, repeat-0.9.3, xdist-3.6.1, cov-6.0.0, flake8-1.3.0, hypothesis-6.121.2, random-order-1.1.1, pylint-0.21.0
+asyncio: mode=Mode.STRICT, default_loop_scope=None
+timeout: 10.0s
+timeout method: signal
+timeout func_only: False
+collected 2 items
+
+tests/test_readme.py ..                                                  [100%]
+
+============================== 2 passed in 0.26s ===============================
 
 
 
 
 
 =====================================================================
-agent-aider-worktree.py:225:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:227:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:230:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:233:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:237:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:243:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:247:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:249:0: C0301: Line too long (110/100) (line-too-long)
-agent-aider-worktree.py:250:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:257:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:261:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:265:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:270:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:273:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:282:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:291:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:300:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:302:0: C0301: Line too long (101/100) (line-too-long)
-agent-aider-worktree.py:312:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:316:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:320:0: C0301: Line too long (113/100) (line-too-long)
-agent-aider-worktree.py:321:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:323:0: C0301: Line too long (160/100) (line-too-long)
-agent-aider-worktree.py:325:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:329:0: C0301: Line too long (106/100) (line-too-long)
-agent-aider-worktree.py:331:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:334:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:339:0: C0301: Line too long (112/100) (line-too-long)
-agent-aider-worktree.py:342:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:348:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:352:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:355:98: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:357:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:359:0: C0301: Line too long (109/100) (line-too-long)
-agent-aider-worktree.py:361:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:362:0: C0301: Line too long (115/100) (line-too-long)
-agent-aider-worktree.py:372:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:376:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:378:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:384:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:386:0: C0301: Line too long (101/100) (line-too-long)
-agent-aider-worktree.py:396:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:398:52: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:400:57: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:412:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:414:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:417:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:422:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:425:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:429:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:444:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:450:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:455:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:461:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:464:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:468:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:472:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:476:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:479:0: C0301: Line too long (114/100) (line-too-long)
-agent-aider-worktree.py:480:0: C0303: Trailing whitespace (trailing-whitespace)
-agent-aider-worktree.py:490:0: C0301: Line too long (123/100) (line-too-long)
-agent-aider-worktree.py:494:0: C0301: Line too long (106/100) (line-too-long)
-agent-aider-worktree.py:512:0: C0303: Trailing whitespace (trailing-whitespace)
+************* Module agent-aider-worktree
+agent-aider-worktree.py:338:0: C0301: Line too long (102/100) (line-too-long)
+agent-aider-worktree.py:342:0: C0301: Line too long (160/100) (line-too-long)
+agent-aider-worktree.py:364:0: C0301: Line too long (101/100) (line-too-long)
+agent-aider-worktree.py:402:0: C0301: Line too long (104/100) (line-too-long)
+agent-aider-worktree.py:425:0: C0301: Line too long (104/100) (line-too-long)
+agent-aider-worktree.py:431:0: C0301: Line too long (101/100) (line-too-long)
+agent-aider-worktree.py:526:0: C0301: Line too long (103/100) (line-too-long)
+agent-aider-worktree.py:576:0: C0301: Line too long (112/100) (line-too-long)
+agent-aider-worktree.py:582:0: C0301: Line too long (110/100) (line-too-long)
+agent-aider-worktree.py:583:0: C0301: Line too long (103/100) (line-too-long)
+agent-aider-worktree.py:607:0: C0301: Line too long (102/100) (line-too-long)
 agent-aider-worktree.py:1:0: C0114: Missing module docstring (missing-module-docstring)
 agent-aider-worktree.py:1:0: C0103: Module name "agent-aider-worktree" doesn't conform to snake_case naming style (invalid-name)
 agent-aider-worktree.py:111:0: R0914: Too many local variables (18/15) (too-many-locals)
 agent-aider-worktree.py:118:9: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:169:16: C0415: Import outside toplevel (random) (import-outside-toplevel)
-agent-aider-worktree.py:174:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
-agent-aider-worktree.py:185:25: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:189:4: C0415: Import outside toplevel (shutil) (import-outside-toplevel)
-agent-aider-worktree.py:195:0: R0914: Too many local variables (25/15) (too-many-locals)
-agent-aider-worktree.py:232:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
-agent-aider-worktree.py:255:13: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:294:4: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
-agent-aider-worktree.py:301:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
-agent-aider-worktree.py:195:0: R0915: Too many statements (53/50) (too-many-statements)
-agent-aider-worktree.py:195:53: W0613: Unused argument 'inner_loop_count' (unused-argument)
-agent-aider-worktree.py:364:11: W0718: Catching too general exception Exception (broad-exception-caught)
-agent-aider-worktree.py:324:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
-agent-aider-worktree.py:341:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
-agent-aider-worktree.py:369:0: C0116: Missing function or method docstring (missing-function-docstring)
-agent-aider-worktree.py:369:0: R0914: Too many local variables (17/15) (too-many-locals)
-agent-aider-worktree.py:371:4: C0415: Import outside toplevel (signal) (import-outside-toplevel)
-agent-aider-worktree.py:373:23: W0613: Unused argument 'sig' (unused-argument)
-agent-aider-worktree.py:373:28: W0613: Unused argument 'frame' (unused-argument)
-agent-aider-worktree.py:449:22: C0207: Use str(elapsed_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:460:12: R1732: Consider using 'with' for resource-allocating operations (consider-using-with)
-agent-aider-worktree.py:460:12: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:481:16: R1723: Unnecessary "else" after "break", remove the "else" and de-indent the code inside it (no-else-break)
-agent-aider-worktree.py:482:33: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:495:49: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:502:29: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:516:41: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:369:0: R0915: Too many statements (73/50) (too-many-statements)
+agent-aider-worktree.py:173:16: C0415: Import outside toplevel (random) (import-outside-toplevel)
+agent-aider-worktree.py:179:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
+agent-aider-worktree.py:191:25: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+agent-aider-worktree.py:195:4: C0415: Import outside toplevel (shutil) (import-outside-toplevel)
+agent-aider-worktree.py:202:0: R0914: Too many local variables (25/15) (too-many-locals)
+agent-aider-worktree.py:239:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+agent-aider-worktree.py:266:13: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+agent-aider-worktree.py:309:4: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
+agent-aider-worktree.py:311:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
+agent-aider-worktree.py:202:0: R0915: Too many statements (53/50) (too-many-statements)
+agent-aider-worktree.py:202:53: W0613: Unused argument 'inner_loop_count' (unused-argument)
+agent-aider-worktree.py:405:11: W0718: Catching too general exception Exception (broad-exception-caught)
+agent-aider-worktree.py:343:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
+agent-aider-worktree.py:369:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
+agent-aider-worktree.py:410:0: C0116: Missing function or method docstring (missing-function-docstring)
+agent-aider-worktree.py:410:0: R0914: Too many local variables (17/15) (too-many-locals)
+agent-aider-worktree.py:412:4: C0415: Import outside toplevel (signal) (import-outside-toplevel)
+agent-aider-worktree.py:414:23: W0613: Unused argument 'sig' (unused-argument)
+agent-aider-worktree.py:414:28: W0613: Unused argument 'frame' (unused-argument)
+agent-aider-worktree.py:522:22: C0207: Use str(elapsed_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+agent-aider-worktree.py:537:12: R1732: Consider using 'with' for resource-allocating operations (consider-using-with)
+agent-aider-worktree.py:537:12: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
+agent-aider-worktree.py:564:16: R1723: Unnecessary "else" after "break", remove the "else" and de-indent the code inside it (no-else-break)
+agent-aider-worktree.py:565:33: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+agent-aider-worktree.py:583:53: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+agent-aider-worktree.py:591:29: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+agent-aider-worktree.py:608:45: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
+agent-aider-worktree.py:410:0: R0915: Too many statements (73/50) (too-many-statements)
 agent-aider-worktree.py:8:0: W0611: Unused Path imported from pathlib (unused-import)
 agent-aider-worktree.py:14:0: W0611: Unused Text imported from rich.text (unused-import)
 
-------------------------------------------------------------------
-Your code has been rated at 5.09/10 (previous run: 7.72/10, -2.62)
+-------------------------------------------------------------------
+Your code has been rated at 8.11/10 (previous run: 10.00/10, -1.89)
+
+Focus on code that causes this test to fail: 
 
 Focus on fixing bugs
+
+
+# Test files content:
+
+# test_readme.py
+"""Test cases for README.md validation"""
+from pathlib import Path
+
+def test_readme_exists():
+    """Check that README.md exists"""
+    assert Path("README.md").exists(), "README.md file not found"
+
+def test_readme_contents():
+    """Check README.md is not empty and contains key sections"""
+    readme = Path("README.md").read_text(encoding="utf-8")
+    assert len(readme) >= 500, "README.md seems too short"
+    assert "# Agent Aider Worktree" in readme, "Missing main header in README.md"
+    assert "## Installation" in readme, "Missing Installation section in README.md"
+    assert "## Usage" in readme, "Missing Usage section in README.md"

@@ -1,9 +1,12 @@
 """Test cases for README.md validation"""
+
 from pathlib import Path
+
 
 def test_readme_exists():
     """Check that README.md exists"""
     assert Path("README.md").exists(), "README.md file not found"
+
 
 def test_readme_contents():
     """Check README.md is not empty and contains key sections"""
