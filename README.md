@@ -28,6 +28,20 @@ Requirements:
 agent-aider-worktree "Your task description here"
 ```
 
+Key features:
+- Automatically creates isolated git worktree
+- Runs tests and linters continuously
+- Integrates with aider for AI-assisted coding
+
+Example workflow:
+```bash
+# Create a new feature branch
+aaw "Add user authentication feature"
+
+# Fix existing code
+aaw "Repair broken login form validation"
+```
+
 ## Examples
 
 Create a new feature:
