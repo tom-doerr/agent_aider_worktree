@@ -112,7 +112,7 @@ def test_arg_parser_configuration():
     # Test task argument configuration
     def get_argument(parser, dest_name):
         """Helper to safely get an argument by its dest name"""
-        for action in parser._actions:
+        for action in parser._actions:  # pylint: disable=protected-access
             if action.dest == dest_name:
                 return action
         raise AssertionError(f"Argument with dest '{dest_name}' not found")
