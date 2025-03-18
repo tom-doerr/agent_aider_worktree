@@ -98,10 +98,10 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
         run_command(f"git checkout {main_branch}", cwd=main_repo_path)
         run_command("git pull", cwd=main_repo_path)
         run_command(f"git pull origin {main_branch}", cwd=worktree_path, check=False)
-        
+
         # Ensure model attribute exists
-        if not hasattr(args, 'model'):
-            args.model = 'r1'
+        if not hasattr(args, "model"):
+            args.model = "r1"
         status = run_command("git status", cwd=worktree_path)
         if (
             "You have unmerged paths" in status.stdout
