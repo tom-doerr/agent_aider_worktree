@@ -424,7 +424,10 @@ def main():
     import signal
 
     def signal_handler(_sig, _frame):
->>>>>>>LLACE
+        console.print(
+            "\n[bold red]Received interrupt signal. Cleaning up...[/bold red]"
+        )
+        sys.exit(0)
 ```
 
 6. Fix line length issues and string formatting:
