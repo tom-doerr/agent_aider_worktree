@@ -1,7 +1,13 @@
 """Test cases for core functionality"""
 
-import pytest
+import sys
+from pathlib import Path
 from unittest.mock import Mock
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from agent_aider_worktree.core import get_repo_name, run_command
 
 def test_get_repo_name_ssh_url(mocker):
@@ -10,7 +16,6 @@ def test_get_repo_name_ssh_url(mocker):
     mock_result.returncode = 0
     mock_result.stdout = "git@github.com:testuser/test-repo.git"
     mocker.patch('agent_aider_worktree.core.run_command', return_value=mock_result)
-    
     repo_name = get_repo_name("/fake/path")
     assert repo_name == "test-repo"
 
@@ -20,7 +25,6 @@ def test_get_repo_name_https_url(mocker):
     mock_result.returncode = 0
     mock_result.stdout = "https://github.com/testuser/https-repo.git"
     mocker.patch('agent_aider_worktree.core.run_command', return_value=mock_result)
-    
     repo_name = get_repo_name("/fake/path")
     assert repo_name == "https-repo"
 
@@ -29,7 +33,6 @@ def test_get_repo_name_failure(mocker):
     mock_result = Mock()
     mock_result.returncode = 1
     mocker.patch('agent_aider_worktree.core.run_command', return_value=mock_result)
-    
     repo_name = get_repo_name("/fake/path")
     assert repo_name == "unknown_repo"
 
