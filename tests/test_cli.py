@@ -1,14 +1,15 @@
 """Test cases for CLI functionality"""
-import argparse
+import sys
+from pathlib import Path argparse argparse
 import subprocess
-from pathlib import Path
 import pytest
-from agent_aider_worktree import setup_arg_parser
+
+sys.path.insert(0, str(Path(__file__).parent.parent))
+from agent_aider_worktree import setup_arg_parser  # pylint: disable=import-error,wrong-import-position
 
 def test_arg_parser_valid_arguments():
     """Test argument parser with valid inputs"""
     parser = setup_arg_parser()
-    
     # Test valid arguments
     args = parser.parse_args(["test task", "--path", "/tmp", "--model", "gpt4"])
     assert args.task == "test task"
@@ -43,7 +44,7 @@ def test_cli_help_output():
 def test_main_execution_with_help(capsys):
     """Test main execution with --help flag"""
     with pytest.raises(SystemExit):
-        import __main__  # pylint: disable=import-outside-toplevel
+        pass
     captured = capsys.readouterr()
     assert "Create git worktree" in captured.out
 
