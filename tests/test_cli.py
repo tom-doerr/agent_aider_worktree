@@ -1,6 +1,7 @@
 """Test cases for CLI functionality"""
 
 import sys
+import os
 from pathlib import Path
 import argparse
 import subprocess
@@ -129,9 +130,8 @@ def test_edge_cases():
     args = parser.parse_args([special_task])
     assert args.task == special_task
 
-def test_worktree_creation_with_special_chars():
+def test_worktree_creation_with_special_chars(mocker):
     """Test worktree creation with special characters in task name"""
-    mocker = pytest.MonkeyPatch()
     mocker.patch("agent_aider_worktree.core.run_command")
     
     test_repo = "/tmp/testrepo"
@@ -148,7 +148,6 @@ def test_merge_conflict_resolution(mocker):
     """Test merge conflict resolution workflow"""
     mock_run = mocker.patch("subprocess.run")
     mocker.patch("os.path.exists", return_value=True)
-    
     # Simulate merge conflict then resolution
     mock_run.side_effect = [
         # First merge attempt fails
