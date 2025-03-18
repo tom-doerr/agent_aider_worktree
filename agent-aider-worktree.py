@@ -5,6 +5,9 @@
 
 import argparse
 import os
+import random
+import shutil
+import signal
 import subprocess
 import sys
 import time
@@ -109,7 +112,7 @@ def run_tests(worktree_path):
     return result.returncode == 0
 
 
-def generate_context(worktree_path):
+def generate_context(worktree_path, args):
     """Generate context.txt with test results and linting information."""
     console.print(Panel("[bold]Generating context.txt[/bold]", style="blue"))
     context_file = os.path.join(worktree_path, "context.txt")
@@ -118,8 +121,9 @@ def generate_context(worktree_path):
     # Use a Python context manager to handle file operations
     with open(context_tmp, "w", encoding="utf-8") as f:
         # Start with date header
+        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         f.write(
-            f"============={datetime.now().strftime('%Y-%m-%d %H:%M:%S')}===================\n\n"
+            f"============={timestamp}===================\n\n"
         )
 
         # Check if tests directory exists
@@ -176,7 +180,8 @@ def generate_context(worktree_path):
         # Add focus directive
         focus_options = ["Focus on fixing the linting issues", "Focus on fixing bugs"]
 
-        f.write(f"\n{random.choice(focus_options)}\n")
+        focus_choice = random.choice(focus_options) if focus_options else "Focus on code quality improvements"
+        f.write(f"\n{focus_choice}\n")
 
         # Add test files content if they exist
         if os.path.exists(tests_dir) and os.path.isdir(tests_dir):
@@ -188,9 +193,6 @@ def generate_context(worktree_path):
                     f.write(f"\n# {test_file}\n")
                     with open(test_file_path, "r", encoding="utf-8") as tf:
                         f.write(tf.read())
-
-    # Move temp file to final location
-    import shutil
 
     shutil.move(context_tmp, context_file)
 
@@ -529,7 +531,7 @@ Examples:
     while iteration <= args.max_iterations:
         # Calculate elapsed time
         elapsed_time = datetime.now() - start_time
-        elapsed_str = str(elapsed_time).split(".", maxsplit=1)[0]  # Remove microseconds
+        elapsed_str = str(elapsed_time).split(".", 1)[0]  # Remove microseconds
 
         console.print(
             Panel(
@@ -573,7 +575,7 @@ Examples:
                 )
 
                 if merge_success:
-                    total_time = str(datetime.now() - start_time).split(".")[0]
+                    total_time = str(datetime.now() - start_time).split(".", 1)[0]
                     # Show final diff
                     console.print(
                         Panel("[bold]Final Changes Diff[/bold]", style="blue")
@@ -606,7 +608,7 @@ Examples:
                         console.print(
                             Panel(
                                 f"[bold]Reached maximum number of iterations ({args.max_iterations})[/bold]\n"
-                                f"Total time spent: {str(datetime.now() - start_time).split('.')[0]}\n"
+                                f"Total time spent: {str(datetime.now() - start_time).split('.', 1)[0]}\n"
                                 "Exiting without completing the task.",
                                 style="red",
                             )
