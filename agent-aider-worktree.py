@@ -673,15 +673,6 @@ Examples:
                     )
                     break
                 continue
-                total_time = str(datetime.now() - start_time).split(".", 1)[0]
-                console.print(
-                    Panel(
-                        f"[bold]Task completed successfully in {iteration} iterations![/bold]\n"
-                        f"Total time: {total_time}",
-                        style="green",
-                    )
-                )
-                break
         else:
             console.print("[yellow]Tests failed. Running aider again...[/yellow]")
             iteration += 1
