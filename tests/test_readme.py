@@ -74,21 +74,21 @@ def test_help_output_examples():
         check=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
-        text=True
+        text=True,
     )
     help_output = result.stdout
-    
+
     # Verify example commands exist and are properly formatted
     examples = [
         "Add user authentication feature",
         "Fix bug in login form",
         "Implement new feature",
-        "Refactor database code"
+        "Refactor database code",
     ]
-    
+
     for example in examples:
         assert example in help_output, f"Missing example in help output: {example}"
-    
+
     # Verify command format with different arguments
     assert re.search(r"agent-aider-worktree --model \w+ \"\w+.*\"", help_output)
     assert re.search(r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output)
@@ -99,21 +99,31 @@ def test_arg_parser_configuration():
     # Create parser from main script
     parser = argparse.ArgumentParser()
     main.setup_arg_parser(parser)  # Assuming setup_arg_parser exists
-    
+
     # Verify required positional argument (pylint: disable=protected-access)
-    assert "task" in parser._positionals._actions[1].dest  # pylint: disable=protected-access
+    assert (
+        "task" in parser._positionals._actions[1].dest
+    )  # pylint: disable=protected-access
     assert parser._positionals._actions[1].required  # pylint: disable=protected-access
-    
+
     # Verify path argument
-    path_arg = [a for a in parser._actions if a.dest == "path"][0]  # pylint: disable=protected-access
+    path_arg = [a for a in parser._actions if a.dest == "path"][
+        0
+    ]  # pylint: disable=protected-access
     assert path_arg.default == "."
-    assert path_arg.help == "Path to the main git repository (default: current directory)"
-    
+    assert (
+        path_arg.help == "Path to the main git repository (default: current directory)"
+    )
+
     # Verify model argument
-    model_arg = [a for a in parser._actions if a.dest == "model"][0]  # pylint: disable=protected-access
+    model_arg = [a for a in parser._actions if a.dest == "model"][
+        0
+    ]  # pylint: disable=protected-access
     assert model_arg.default == "r1"
-    
+
     # Verify max iterations
-    max_iter_arg = [a for a in parser._actions if a.dest == "max_iterations"][0]  # pylint: disable=protected-access
+    max_iter_arg = [a for a in parser._actions if a.dest == "max_iterations"][
+        0
+    ]  # pylint: disable=protected-access
     assert max_iter_arg.default == 10
     assert max_iter_arg.type == int
