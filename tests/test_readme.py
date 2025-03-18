@@ -41,14 +41,24 @@ def test_readme_usage_section_formatting():
     code_blocks = [block for block in usage_section.split("```") if block.strip()]
     bash_blocks = [block for block in code_blocks if block.startswith("bash")]
     assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
-    # Check for required command in any of the bash blocks
-    command_found = any("agent-aider-worktree.py" in block for block in bash_blocks)
-    assert command_found, "Missing example command in bash code blocks of usage section"
-    # Verify command formatting in first bash block
-    first_bash_block = bash_blocks[0]
-    assert (
-        "agent-aider-worktree" in first_bash_block
-    ), "Missing agent-aider-worktree command in first bash example"
-    assert (
-        '"' in first_bash_block or "'" in first_bash_block
-    ), "Task argument should be properly quoted in example command"
+    # Check for required command patterns in bash blocks
+    required_patterns = [
+        r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"
+    ]
+    
+    pattern_found = False
+    for block in bash_blocks:
+        if any(re.search(pattern, block) for pattern in required_patterns):
+            pattern_found = True
+            # Verify command formatting
+            assert (
+                '"' in block or "'" in block
+            ), f"Task argument should be properly quoted in example command: {block}"
+            assert (
+                "agent-aider-worktree" in block
+            ), f"Missing agent-aider-worktree command in bash example: {block}"
+            assert (
+                len(block.split()) >= 2
+            ), f"Command should include a task argument: {block}"
+    
+    assert pattern_found, "Missing valid example command in bash code blocks of usage section"
