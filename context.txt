@@ -1,4 +1,4 @@
-=============2025-03-18 12:21:51===================
+=============2025-03-18 12:32:15===================
 
 /home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
@@ -6,20 +6,17 @@ The event loop scope for asynchronous fixtures will default to the fixture cachi
   warnings.warn(PytestDeprecationWarning(_DEFAULT_FIXTURE_LOOP_SCOPE_UNSET))
 ============================= test session starts ==============================
 platform linux -- Python 3.11.10, pytest-8.3.4, pluggy-1.5.0
-testmon: new DB, environment: default
-We'd like to hear from testmon users! Please go to https://testmon.org/survey to leave feedback.
+testmon: changed files: 0, unchanged files: 1, environment: default
 Test order randomisation NOT enabled. Enable with --random-order or --random-order-bucket=<bucket_type>
-rootdir: /home/tom/worktrees/agent_aider_worktree/please_create_the_structure_for_a_poetry_package_20250318_122151
+rootdir: /home/tom/worktrees/agent_aider_worktree/please_make_it_so_it_shows_the_complete_diff_at_th_20250318_123215
 plugins: mock-3.14.0, asyncio-0.24.0, testmon-2.1.3, anyio-4.9.0, timeout-2.3.1, repeat-0.9.3, xdist-3.6.1, cov-6.0.0, flake8-1.3.0, hypothesis-6.121.2, random-order-1.1.1, pylint-0.21.0
 asyncio: mode=Mode.STRICT, default_loop_scope=None
 timeout: 10.0s
 timeout method: signal
 timeout func_only: False
-collected 2 items
+collected 2 items / 2 deselected / 0 selected
 
-tests/test_readme.py ..                                                  [100%]
-
-============================== 2 passed in 0.26s ===============================
+============================ 2 deselected in 0.21s =============================
 
 
 
@@ -73,8 +70,8 @@ agent-aider-worktree.py:410:0: R0915: Too many statements (73/50) (too-many-stat
 agent-aider-worktree.py:8:0: W0611: Unused Path imported from pathlib (unused-import)
 agent-aider-worktree.py:14:0: W0611: Unused Text imported from rich.text (unused-import)
 
--------------------------------------------------------------------
-Your code has been rated at 8.11/10 (previous run: 10.00/10, -1.89)
+------------------------------------------------------------------
+Your code has been rated at 8.11/10 (previous run: 8.11/10, +0.00)
 
 Focus on code that causes this test to fail: 
 
@@ -85,11 +82,14 @@ Focus on fixing bugs
 
 # test_readme.py
 """Test cases for README.md validation"""
+
 from pathlib import Path
+
 
 def test_readme_exists():
     """Check that README.md exists"""
     assert Path("README.md").exists(), "README.md file not found"
+
 
 def test_readme_contents():
     """Check README.md is not empty and contains key sections"""
