@@ -8,7 +8,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent_aider_worktree import setup_arg_parser
+from agent_aider_worktree import setup_arg_parser  # pylint: disable=wrong-import-position
 
 
 def test_readme_exists():
@@ -77,7 +77,7 @@ def test_readme_usage_section_formatting():
 def test_help_output_examples():
     """Test that the help output contains valid examples"""
     result = subprocess.run(
-        ["./agent_aider_worktree.py", "--help"],
+        ["./agent-aider-worktree.py", "--help"],
         check=True,
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
@@ -97,8 +97,8 @@ def test_help_output_examples():
         assert example in help_output, f"Missing example in help output: {example}"
 
     # Verify command format with different arguments
-    assert re.search(r"agent-aider-worktree --model \w+ \"\w+.*\"", help_output)
-    assert re.search(r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output)
+    assert re.search(r"agent-aider-worktree --model \w+ \"\w+.*\"", help_output)  # pylint: disable=line-too-long
+    assert re.search(r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output)  # pylint: disable=line-too-long
 
 
 def test_arg_parser_configuration():
