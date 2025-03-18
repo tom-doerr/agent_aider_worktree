@@ -106,7 +106,9 @@ def test_arg_parser_configuration():
     assert isinstance(
         parser, argparse.ArgumentParser
     ), "setup_arg_parser should return an ArgumentParser instance"
-    assert parser.description.startswith("Create git worktree"), "Missing correct description"
+    assert parser.description.startswith(
+        "Create git worktree"
+    ), "Missing correct description"
     assert parser.epilog, "Missing examples section in epilog"
 
     # Test task argument configuration
@@ -121,7 +123,9 @@ def test_arg_parser_configuration():
     task_arg = get_argument(parser, "task")
     assert task_arg.required, "Task argument should be required"
     assert not task_arg.option_strings, "Task argument should be positional"
-    assert task_arg.help == "The task description to pass to aider", "Incorrect help message"
+    assert (
+        task_arg.help == "The task description to pass to aider"
+    ), "Incorrect help message"
 
     # Verify path argument configuration
     path_arg = get_argument(parser, "path")
@@ -133,14 +137,17 @@ def test_arg_parser_configuration():
     # Verify model argument configuration
     model_arg = get_argument(parser, "model")
     assert model_arg.default == "r1", "Incorrect default model"
-    assert model_arg.help == "Model to use with aider (default: r1)", "Incorrect help message"
+    assert (
+        model_arg.help == "Model to use with aider (default: r1)"
+    ), "Incorrect help message"
 
     # Verify max iterations configuration
     max_iter_arg = get_argument(parser, "max_iterations")
     assert max_iter_arg.default == 10, "Incorrect default max iterations"
     assert max_iter_arg.type == int, "Max iterations should be integer type"
-    assert "--max-iterations" in max_iter_arg.option_strings, \
-        "Missing long option for max iterations"
+    assert (
+        "--max-iterations" in max_iter_arg.option_strings
+    ), "Missing long option for max iterations"
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
