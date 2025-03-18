@@ -161,7 +161,9 @@ def test_merge_conflict_resolution(mocker):
     # Simulate merge conflict then resolution
     mock_run.side_effect = [
         # First merge attempt fails
-        subprocess.CompletedProcess(args=[], returncode=1, stdout="merge conflict", stderr=""),
+        subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="merge conflict", stderr=""
+        ),
         # Conflict resolution
         subprocess.CompletedProcess(args=[], returncode=0, stdout="merged", stderr=""),
         # Successful push
