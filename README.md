@@ -1,6 +1,6 @@
 # Agent Aider Worktree
 
-A CLI tool to manage git worktrees with AI-assisted development workflows using aider.
+A CLI tool to manage git worktrees with AI-assisted development workflows using [aider](https://github.com/paul-gauthier/aider).
 
 ## Features
 
