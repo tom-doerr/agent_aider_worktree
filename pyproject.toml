@@ -33,4 +33,4 @@ good-names = ["cli", "cmd", "cwd", "env", "repo_path", "worktree_path", "args"]
 
 [tool.pylint.DESIGN]
 max-args = 10
-max-locals = 15]
+max-locals = 15
