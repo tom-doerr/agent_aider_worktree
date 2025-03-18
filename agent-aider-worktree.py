@@ -121,10 +121,8 @@ def generate_context(worktree_path):
     # Use a Python context manager to handle file operations
     with open(context_tmp, "w", encoding="utf-8") as f:
         # Start with date header
-        timestamp = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        f.write(
-            f"============={timestamp}===================\n\n"
-        )
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        f.write(f"============={timestamp}===================\n\n")
 
         # Check if tests directory exists
         tests_dir = os.path.join(worktree_path, "tests")
@@ -180,8 +178,11 @@ def generate_context(worktree_path):
         # Add focus directive
         focus_options = ["Focus on fixing the linting issues", "Focus on fixing bugs"]
 
-        focus_choice = (random.choice(focus_options)
-                      if focus_options else "Focus on code quality improvements")
+        focus_choice = (
+            random.choice(focus_options)
+            if focus_options
+            else "Focus on code quality improvements"
+        )
         f.write(f"\n{focus_choice}\n")
 
         # Add test files content if they exist
@@ -322,7 +323,9 @@ def run_aider(worktree_path, task, args, model="r1"):
     )
 
 
-def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task, model):
+def merge_and_push(
+    worktree_path, main_repo_path, branch_name, main_branch, task, model
+):
     """Merge changes from main, then push if no conflicts."""
     try:
         # First pull latest changes from main branch
@@ -576,7 +579,12 @@ Examples:
             if not args.no_push:
                 # Try to merge and push
                 merge_success = merge_and_push(
-                    worktree_path, main_repo_path, branch_name, main_branch, args.task, args.model
+                    worktree_path,
+                    main_repo_path,
+                    branch_name,
+                    main_branch,
+                    args.task,
+                    args.model,
                 )
 
                 if merge_success:
@@ -608,7 +616,7 @@ Examples:
                     break
                 else:
                     console.print(
-                        "[yellow]Merge conflicts detected. " 
+                        "[yellow]Merge conflicts detected. "
                         "Running aider again to resolve conflicts...[/yellow]"
                     )
                     iteration += 1
