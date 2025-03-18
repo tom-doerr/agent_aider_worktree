@@ -4,7 +4,7 @@ import re
 import subprocess
 import argparse
 from pathlib import Path
-from agent_aider_worktree import main  # pylint: disable=import-error
+from agent_aider_worktree import main, setup_arg_parser  # pylint: disable=import-error
 
 
 def test_readme_exists():
@@ -100,8 +100,7 @@ def test_help_output_examples():
 def test_arg_parser_configuration():
     """Test that all command-line arguments are properly configured"""
     # Create parser from main script
-    parser = argparse.ArgumentParser()
-    main.setup_arg_parser(parser)
+    parser = setup_arg_parser()
 
     # Verify required positional argument (pylint: disable=protected-access)
     assert (
