@@ -4,9 +4,9 @@ import sys
 from pathlib import Path
 from unittest.mock import Mock
 
-import pytest
-
 sys.path.insert(0, str(Path(__file__).parent.parent))
+
+import pytest
 
 from agent_aider_worktree.core import get_repo_name, run_command
 
