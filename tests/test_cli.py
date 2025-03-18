@@ -3,6 +3,8 @@
 import sys
 import os
 from pathlib import Path
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 import argparse
 import subprocess
 import pytest
@@ -11,8 +13,6 @@ from agent_aider_worktree.core import (
     create_worktree,
     merge_and_push,
 )
-
-sys.path.insert(0, str(Path(__file__).parent.parent))
 
 
 def test_arg_parser_valid_arguments():
