@@ -1,4 +1,4 @@
-=============2025-03-18 12:32:15===================
+=============2025-03-18 12:49:04===================
 
 /home/tom/.pyenv/versions/3.11.10/lib/python3.11/site-packages/pytest_asyncio/plugin.py:208: PytestDeprecationWarning: The configuration option "asyncio_default_fixture_loop_scope" is unset.
 The event loop scope for asynchronous fixtures will default to the fixture caching scope. Future versions of pytest-asyncio will default the loop scope for asynchronous fixtures to function scope. Set the default fixture loop scope explicitly in order to avoid unexpected behavior in the future. Valid fixture loop scopes are: "function", "class", "module", "package", "session"
@@ -8,7 +8,7 @@ The event loop scope for asynchronous fixtures will default to the fixture cachi
 platform linux -- Python 3.11.10, pytest-8.3.4, pluggy-1.5.0
 testmon: changed files: 0, unchanged files: 1, environment: default
 Test order randomisation NOT enabled. Enable with --random-order or --random-order-bucket=<bucket_type>
-rootdir: /home/tom/worktrees/agent_aider_worktree/please_make_it_so_it_shows_the_complete_diff_at_th_20250318_123215
+rootdir: /home/tom/worktrees/agent_aider_worktree/please_let_it_show_at_the_end_what_task_it_was_wor_20250318_124904
 plugins: mock-3.14.0, asyncio-0.24.0, testmon-2.1.3, anyio-4.9.0, timeout-2.3.1, repeat-0.9.3, xdist-3.6.1, cov-6.0.0, flake8-1.3.0, hypothesis-6.121.2, random-order-1.1.1, pylint-0.21.0
 asyncio: mode=Mode.STRICT, default_loop_scope=None
 timeout: 10.0s
@@ -16,7 +16,7 @@ timeout method: signal
 timeout func_only: False
 collected 2 items / 2 deselected / 0 selected
 
-============================ 2 deselected in 0.21s =============================
+============================ 2 deselected in 0.19s =============================
 
 
 
@@ -24,54 +24,10 @@ collected 2 items / 2 deselected / 0 selected
 
 =====================================================================
 ************* Module agent-aider-worktree
-agent-aider-worktree.py:338:0: C0301: Line too long (102/100) (line-too-long)
-agent-aider-worktree.py:342:0: C0301: Line too long (160/100) (line-too-long)
-agent-aider-worktree.py:364:0: C0301: Line too long (101/100) (line-too-long)
-agent-aider-worktree.py:402:0: C0301: Line too long (104/100) (line-too-long)
-agent-aider-worktree.py:425:0: C0301: Line too long (104/100) (line-too-long)
-agent-aider-worktree.py:431:0: C0301: Line too long (101/100) (line-too-long)
-agent-aider-worktree.py:526:0: C0301: Line too long (103/100) (line-too-long)
-agent-aider-worktree.py:576:0: C0301: Line too long (112/100) (line-too-long)
-agent-aider-worktree.py:582:0: C0301: Line too long (110/100) (line-too-long)
-agent-aider-worktree.py:583:0: C0301: Line too long (103/100) (line-too-long)
-agent-aider-worktree.py:607:0: C0301: Line too long (102/100) (line-too-long)
-agent-aider-worktree.py:1:0: C0114: Missing module docstring (missing-module-docstring)
-agent-aider-worktree.py:1:0: C0103: Module name "agent-aider-worktree" doesn't conform to snake_case naming style (invalid-name)
-agent-aider-worktree.py:111:0: R0914: Too many local variables (18/15) (too-many-locals)
-agent-aider-worktree.py:118:9: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:173:16: C0415: Import outside toplevel (random) (import-outside-toplevel)
-agent-aider-worktree.py:179:8: C0415: Import outside toplevel (random) (import-outside-toplevel)
-agent-aider-worktree.py:191:25: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:195:4: C0415: Import outside toplevel (shutil) (import-outside-toplevel)
-agent-aider-worktree.py:202:0: R0914: Too many local variables (25/15) (too-many-locals)
-agent-aider-worktree.py:239:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
-agent-aider-worktree.py:266:13: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:309:4: W1510: 'subprocess.run' used without explicitly defining the value for 'check'. (subprocess-run-check)
-agent-aider-worktree.py:311:18: W1309: Using an f-string that does not have any interpolated variables (f-string-without-interpolation)
-agent-aider-worktree.py:202:0: R0915: Too many statements (53/50) (too-many-statements)
-agent-aider-worktree.py:202:53: W0613: Unused argument 'inner_loop_count' (unused-argument)
-agent-aider-worktree.py:405:11: W0718: Catching too general exception Exception (broad-exception-caught)
-agent-aider-worktree.py:343:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
-agent-aider-worktree.py:369:12: E1120: No value for argument 'args' in function call (no-value-for-parameter)
-agent-aider-worktree.py:410:0: C0116: Missing function or method docstring (missing-function-docstring)
-agent-aider-worktree.py:410:0: R0914: Too many local variables (17/15) (too-many-locals)
-agent-aider-worktree.py:412:4: C0415: Import outside toplevel (signal) (import-outside-toplevel)
-agent-aider-worktree.py:414:23: W0613: Unused argument 'sig' (unused-argument)
-agent-aider-worktree.py:414:28: W0613: Unused argument 'frame' (unused-argument)
-agent-aider-worktree.py:522:22: C0207: Use str(elapsed_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:537:12: R1732: Consider using 'with' for resource-allocating operations (consider-using-with)
-agent-aider-worktree.py:537:12: W1514: Using open without explicitly specifying an encoding (unspecified-encoding)
-agent-aider-worktree.py:564:16: R1723: Unnecessary "else" after "break", remove the "else" and de-indent the code inside it (no-else-break)
-agent-aider-worktree.py:565:33: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:583:53: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:591:29: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:608:45: C0207: Use str(datetime.now() - start_time).split('.', maxsplit=1)[0] instead (use-maxsplit-arg)
-agent-aider-worktree.py:410:0: R0915: Too many statements (73/50) (too-many-statements)
-agent-aider-worktree.py:8:0: W0611: Unused Path imported from pathlib (unused-import)
-agent-aider-worktree.py:14:0: W0611: Unused Text imported from rich.text (unused-import)
+agent-aider-worktree.py:434:4: E0001: Parsing failed: 'invalid syntax (agent-aider-worktree, line 434)' (syntax-error)
 
 ------------------------------------------------------------------
-Your code has been rated at 8.11/10 (previous run: 8.11/10, +0.00)
+Your code has been rated at 4.44/10 (previous run: 4.44/10, +0.00)
 
 Focus on code that causes this test to fail: 
 
