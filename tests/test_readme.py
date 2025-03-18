@@ -96,6 +96,12 @@ def test_help_output_examples():
     assert re.search(r"agent-aider-worktree -p \S+ \"\w+.*\"", help_output)
 
 
+def test_setup_arg_parser_exists():
+    """Test that setup_arg_parser exists and returns a parser"""
+    parser = setup_arg_parser()
+    assert isinstance(parser, argparse.ArgumentParser), \
+        "setup_arg_parser should return an ArgumentParser instance"
+
 def test_arg_parser_configuration():
     """Test that all command-line arguments are properly configured"""
     # Create parser from main script

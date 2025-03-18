@@ -421,12 +421,19 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, args
         return False
 
 
-def setup_arg_parser():
+def setup_arg_parser() -> argparse.ArgumentParser:
     """Create and configure the argument parser"""
-    # Reuse the arg parser from setup_arg_parser()
-    parser = setup_arg_parser()
+    parser = argparse.ArgumentParser(
+        description="Create git worktree, run AI-assisted coding until tests pass"
+    )
 
-    parser.add_argument("task", help="The task description to pass to aider")
+    # Positional arguments
+    parser.add_argument(
+        "task", 
+        type=str,
+        help="The task description to pass to aider"
+    )
+    # Optional arguments
     parser.add_argument(
         "-p",
         "--path",
