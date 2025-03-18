@@ -4,7 +4,7 @@ import re
 import subprocess
 import argparse
 from pathlib import Path
-from agent_aider_worktree import main  # Matches the actual file name
+from agent_aider_worktree import main  # pylint: disable=import-error
 
 
 def test_readme_exists():

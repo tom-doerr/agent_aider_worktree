@@ -5,14 +5,10 @@
 
 import argparse
 import os
-import random
-import shutil
-import signal
 import subprocess
 import sys
 import time
 from datetime import datetime
-from pathlib import Path
 
 from rich.console import Console
 from rich.panel import Panel
@@ -175,13 +171,10 @@ def generate_context(worktree_path):
                     failing_tests.append(line)
 
             if failing_tests:
-                import random
-
                 f.write(random.choice(failing_tests) + "\n")
 
         # Add focus directive
         focus_options = ["Focus on fixing the linting issues", "Focus on fixing bugs"]
-        import random
 
         f.write(f"\n{random.choice(focus_options)}\n")
 
@@ -193,7 +186,7 @@ def generate_context(worktree_path):
                 for test_file in test_files:
                     test_file_path = os.path.join(tests_dir, test_file)
                     f.write(f"\n# {test_file}\n")
-                    with open(test_file_path, "r") as tf:
+                    with open(test_file_path, "r", encoding="utf-8") as tf:
                         f.write(tf.read())
 
     # Move temp file to final location
@@ -275,7 +268,7 @@ def run_aider(worktree_path, task, args, model="r1"):
             "[dim]No Python files found in repository, creating placeholder...[/dim]"
         )
         placeholder_file = os.path.join(worktree_path, "placeholder.py")
-        with open(placeholder_file, "w") as f:
+        with open(placeholder_file, "w", encoding="utf-8") as f:
             f.write("# Placeholder file\n# TODO: Add your Python code here\n")
 
         # Add and commit the placeholder file
@@ -351,8 +344,12 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             )
 
             # Run aider to resolve conflicts
-            conflict_task = f"Please resolve the merge conflicts in this repository. Look at the git status output and fix the conflicts. Original task: {task}"
-            run_aider(worktree_path, conflict_task, inner_loop_count=1)
+            conflict_task = (
+                f"Please resolve the merge conflicts in this repository. "
+                f"Look at the git status output and fix the conflicts. "
+                f"Original task: {task}"
+            )
+            run_aider(worktree_path, conflict_task, args, model=args.model)
 
             # Check if conflicts were resolved
             status = run_command("git status", cwd=worktree_path)
@@ -378,7 +375,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             fix_task = (
                 f"Fix the failing tests after merging with main. Original task: {task}"
             )
-            run_aider(worktree_path, fix_task, inner_loop_count=1)
+            run_aider(worktree_path, fix_task, args, model=args.model)
 
             # Check if tests pass now
             tests_pass = run_tests(worktree_path)
@@ -420,8 +417,8 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
 
 
 def main():
+    """Main entry point for the CLI application"""
     # Set up signal handlers for graceful exit
-    import signal
 
     def signal_handler(_sig, _frame):
         console.print(
@@ -434,7 +431,8 @@ def main():
     console.print(
         Panel.fit(
             "[bold cyan]Agent Aider Worktree[/bold cyan]\n"
-            "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
+            "[dim]Create a git worktree and run aider until tests pass, "
+            "then merge back to main.[/dim]",
             border_style="blue",
         )
     )
@@ -556,7 +554,7 @@ Examples:
         console.print(
             "[bold blue]Running aider to improve code and fix issues...[/bold blue]"
         )
-        run_aider(worktree_path, args.task, args, args.model, 1)
+        run_aider(worktree_path, args.task, args, model=args.model)
 
         # Check if tests pass after aider run
         console.print("[bold blue]Checking if tests pass...[/bold blue]")
