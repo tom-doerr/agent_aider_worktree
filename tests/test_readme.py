@@ -31,12 +31,29 @@ def test_readme_installation_instructions():
 
 
 def test_readme_usage_section_formatting():
-    """Verify usage section has proper code formatting"""
+    """Verify usage section has proper code formatting with valid examples"""
     with open("README.md", "r", encoding="utf-8") as f:
         readme = f.read()
 
+    # Extract usage section content
     usage_section = readme.split("## Usage")[1].split("##")[0]
-    assert "```bash" in usage_section, "Missing bash code block in usage section"
-    assert (
-        "agent-aider-worktree.py" in usage_section
-    ), "Missing example command in usage section"
+    
+    # Check for bash code blocks
+    code_blocks = [block for block in usage_section.split("```") if block.strip()]
+    bash_blocks = [block for block in code_blocks if block.startswith("bash")]
+    
+    assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
+    
+    # Check for required command in any of the bash blocks
+    command_found = any(
+        "agent-aider-worktree.py" in block 
+        for block in bash_blocks
+    )
+    assert command_found, "Missing example command in bash code blocks of usage section"
+    
+    # Verify command formatting in first bash block
+    first_bash_block = bash_blocks[0]
+    assert "agent-aider-worktree" in first_bash_block, \
+        "Missing agent-aider-worktree command in first bash example"
+    assert '"' in first_bash_block or "'" in first_bash_block, \
+        "Task argument should be properly quoted in example command"
