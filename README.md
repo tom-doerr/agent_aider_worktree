@@ -7,6 +7,7 @@ A CLI tool to manage git worktrees with AI-assisted development workflows using 
 ### Poetry Installation
 
 First install Poetry if you haven't already:
+
 ```bash
 curl -sSL https://install.python-poetry.org | python3 -
 ```
