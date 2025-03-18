@@ -1,15 +1,21 @@
 [tool.poetry]
 name = "agent-aider-worktree"
 version = "0.1.0"
-description = "A CLI tool for managing git worktrees with AI-assisted development workflows"
+description = "AI-assisted git worktree management with aider integration"
 authors = ["Your Name <your.email@example.com>"]
-readme = "README.md"
 license = "MIT"
-packages = [ {include = "agent_aider_worktree", from = "src"} ]
+readme = "README.md"
+packages = [{include = "agent_aider_worktree", from = "src"}]
 include = ["LICENSE"]
 
+[tool.poetry.dependencies]
+python = "^3.11"
+aider-chat = "^0.10.0"
+rich = "^13.7.0"
+python-dotenv = "^1.0.0"
+
 [tool.poetry.scripts]
-agent-aider-worktree = "agent_aider_worktree.cli:main"
+agent-aider-worktree = "agent_aider_worktree.__main__:main"
 
 [tool.poetry.urls]
 Homepage = "https://github.com/yourusername/agent-aider-worktree"

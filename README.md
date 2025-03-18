@@ -12,8 +12,14 @@ A CLI tool to manage git worktrees with AI-assisted development workflows using 
 
 ## Installation
 
-### Poetry
+### Poetry Installation
 
+First install Poetry if you haven't already:
+```bash
+curl -sSL https://install.python-poetry.org | python3 -
+```
+
+Then install the package:
 ```bash
 git clone https://github.com/yourusername/agent-aider-worktree.git
 cd agent-aider-worktree
@@ -21,7 +27,7 @@ poetry install
 poetry shell  # Optional: activate virtual environment
 ```
 
-### PyPI
+### PyPI (when published)
 ```bash
 pip install agent-aider-worktree
 ```
