@@ -95,9 +95,9 @@ def test_help_output_examples():
     # Verify exact match of expected examples
     expected_examples = [
         'agent-aider-worktree "Add user authentication feature"',
-        'agent-aider-worktree -p /path/to/repo "Fix bug login login form"',
+        'agent-aider-worktree -p /path/to/repo "Fix bug in login form"',
         'agent-aider-worktree --model claude-3-opus "Implement new feature"',
-        '-a-aider-worktree --inner-loop 5 "Refactor database code"',
+        'agent-aider-worktree --inner-loop 5 "Refactor database code"',
     ]
     assert examples == expected_examples, "Help examples don't match expected output"
 

@@ -123,7 +123,41 @@ def test_edge_cases():
     long_task = "a" * 1000
     args = parser.parse_args([long_task])
     assert args.task == long_task
+    
     # Test special characters in task
     special_task = "Fix $weird & characters! #123"
     args = parser.parse_args([special_task])
     assert args.task == special_task
+
+def test_worktree_creation_with_special_chars():
+    """Test worktree creation with special characters in task name"""
+    mocker = pytest.MonkeyPatch()
+    mocker.patch("agent_aider_worktree.core.run_command")
+    
+    test_repo = "/tmp/testrepo"
+    os.makedirs(test_repo, exist_ok=True)
+    os.makedirs(os.path.join(test_repo, ".git"), exist_ok=True)
+    
+    task = "Test @#$%^&*()_+-=[]{}|;':,./<>?"
+    worktree_path, branch_name, _ = create_worktree(test_repo, task)
+    
+    assert "test_" in worktree_path.lower()
+    assert "test_" in branch_name.lower()
+
+def test_merge_conflict_resolution(mocker):
+    """Test merge conflict resolution workflow"""
+    mock_run = mocker.patch("subprocess.run")
+    mocker.patch("os.path.exists", return_value=True)
+    
+    # Simulate merge conflict then resolution
+    mock_run.side_effect = [
+        # First merge attempt fails
+        subprocess.CompletedProcess(args=[], returncode=1, stdout="", stderr=""),
+        # Conflict resolution
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
+        # Successful push
+        subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr="")
+    ]
+    
+    mock_args = argparse.Namespace(task="test task", model="r1")
+    assert merge_and_push("/tmp", "/repo", "branch", "main", mock_args) is True
