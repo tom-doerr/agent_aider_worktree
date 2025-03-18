@@ -34,6 +34,20 @@ Fix a bug:
 agent-aider-worktree "Fix login form validation bug"
 ```
 
+## Testing
+
+Run the test suite with:
+
+```bash
+python3.11 -m pytest tests/ -v
+```
+
+Tests include:
+- README validation
+- Worktree creation and management
+- Branch naming conventions
+- Conflict resolution handling
+
 ## Configuration
 
 Configure through command line options:
