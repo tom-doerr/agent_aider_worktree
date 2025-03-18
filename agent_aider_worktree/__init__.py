@@ -1,6 +1,6 @@
 """Agent Aider Worktree package"""
 
-from . import main
+from .main import main
 from .cli import setup_arg_parser
 from .core import create_worktree, merge_and_push
 

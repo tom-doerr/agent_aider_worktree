@@ -5,10 +5,9 @@ import re
 import subprocess
 import sys
 from pathlib import Path
+from agent_aider_worktree.cli import setup_arg_parser
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-
-from agent_aider_worktree.cli import setup_arg_parser
 
 
 def test_readme_exists():

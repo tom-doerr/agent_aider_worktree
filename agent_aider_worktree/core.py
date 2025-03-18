@@ -3,9 +3,6 @@
 import os
 import time
 import subprocess
-import shutil
-import random
-from datetime import datetime
 from typing import NamedTuple
 from rich.console import Console
 from rich.panel import Panel
@@ -26,12 +23,10 @@ def run_tests(worktree_path):
     """Run pytest and return True if all tests pass."""
     console.print(Panel("[bold]Running Tests[/bold]", style="blue"))
     result = run_command("pytest", cwd=worktree_path, check=False)
-    
     if result.returncode == 0:
         console.print(Panel("[bold]All Tests Passed![/bold]", style="green"))
     else:
         console.print(Panel("[bold]Tests Failed[/bold]", style="red"))
-    
     return result.returncode == 0
 
 class CommandResult(NamedTuple):
@@ -85,7 +80,7 @@ def create_worktree(repo_path, task_name):
     return worktree_path, branch_name, current_branch
 
 
-def run_aider(worktree_path, task, args, model="r1"):
+def run_aider(worktree_path, task, _args, _model="r1"):
     """Run aider with the given task."""
     console.print(Panel(f"[bold]Running aider with task:[/bold]\n{task}", style="cyan"))
     # Actual implementation from agent-aider-worktree.py would go here
