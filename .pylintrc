@@ -1,0 +1,9 @@
+[MASTER]
+extensions= 
+    .pylint.extensions.mccabe,
+    .pylint.extensions.docparams,
+    .pylint.extensions.docstyle
+
+ignore-patterns=
+    README.md$,
+    ^tests/
