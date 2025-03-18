@@ -1,4 +1,4 @@
-# pylint: skip-file
+<!-- pylint: skip-file -->
 # Agent Aider Worktree [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 Agent Aider Worktree is a CLI tool that manages git worktrees with AI-assisted development workflow using [aider](https://github.com/paul-gauthier/aider).
