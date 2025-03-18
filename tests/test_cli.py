@@ -169,7 +169,9 @@ def test_merge_conflict_resolution(mocker):
         # Pull worktree
         subprocess.CompletedProcess(args=[], returncode=0, stdout="", stderr=""),
         # First merge attempt fails
-        subprocess.CompletedProcess(args=[], returncode=1, stdout="merge conflict", stderr=""),
+        subprocess.CompletedProcess(
+            args=[], returncode=1, stdout="merge conflict", stderr=""
+        ),
         # Conflict resolution
         subprocess.CompletedProcess(args=[], returncode=0, stdout="merged", stderr=""),
         # Status check
