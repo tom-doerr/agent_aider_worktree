@@ -15,10 +15,12 @@ def get_repo_name(repo_path):
     result = run_command("git remote get-url origin", cwd=repo_path)
     if result.returncode != 0:
         return "unknown_repo"
-
+    
     remote_url = result.stdout.strip()
-    repo_name = remote_url.split("/")[-1].replace(".git", "")
-    return repo_name
+    # Handle SSH URLs that start with git@
+    if remote_url.startswith("git@"):
+        return remote_url.split(":")[-1].replace(".git", "")
+    return remote_url.split("/")[-1].replace(".git", "")
 
 
 def run_tests(worktree_path):
