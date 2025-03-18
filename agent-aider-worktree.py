@@ -199,7 +199,7 @@ def generate_context(worktree_path):
 
 def run_aider(worktree_path, task, args, model="r1"):
     """Run aider with the given task.
-    
+
     Args:
         worktree_path: Path to git worktree
         task: Task description for AI
@@ -575,11 +575,19 @@ Examples:
                 if merge_success:
                     total_time = str(datetime.now() - start_time).split(".")[0]
                     # Show final diff
-                    console.print(Panel("[bold]Final Changes Diff[/bold]", style="blue"))
-                    diff_result = run_command("git diff --cached", cwd=worktree_path, capture_output=False)
+                    console.print(
+                        Panel("[bold]Final Changes Diff[/bold]", style="blue")
+                    )
+                    diff_result = run_command(
+                        "git diff --cached", cwd=worktree_path, capture_output=False
+                    )
                     if diff_result.stdout:
-                        console.print(Panel(diff_result.stdout, title="Complete Diff", style="dim"))
-                    
+                        console.print(
+                            Panel(
+                                diff_result.stdout, title="Complete Diff", style="dim"
+                            )
+                        )
+
                     console.print(
                         Panel(
                             f"[bold]Task completed successfully in {iteration} iterations![/bold]\n"
