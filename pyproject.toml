@@ -20,12 +20,6 @@ agent-aider-worktree = "agent_aider_worktree.__main__:main"
 [tool.poetry.urls]
 Homepage = "https://github.com/yourusername/agent-aider-worktree"
 
-[tool.poetry.dependencies]
-python = "^3.11"
-aider-chat = ">=0.10.0"
-rich = ">=13.0.0"
-python-dotenv = ">=1.0.0"
-
 [tool.poetry.group.dev.dependencies]
 pytest = ">=8.0.0"
 pylint = ">=3.0.0"
