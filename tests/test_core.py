@@ -37,6 +37,33 @@ def test_get_repo_name_failure(mocker):
     repo_name = get_repo_name("/fake/path")
     assert repo_name == "unknown_repo"
 
+def test_get_repo_name_ssh_url_with_subgroups(mocker):
+    """Test repo name extraction from SSH URL with subgroups"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "git@gitlab.com:mygroup/subgroup/myrepo.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "myrepo"
+
+def test_get_repo_name_https_url_with_www(mocker):
+    """Test repo name extraction from HTTPS URL with www"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = "https://www.github.com/orgname/reponame.git"
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "reponame"
+
+def test_get_repo_name_empty_remote_url(mocker):
+    """Test repo name fallback when remote URL is empty"""
+    mock_result = Mock()
+    mock_result.returncode = 0
+    mock_result.stdout = ""
+    mocker.patch("agent_aider_worktree.core.run_command", return_value=mock_result)
+    repo_name = get_repo_name("/fake/path")
+    assert repo_name == "unknown_repo"
+
 
 def test_run_command_success():
     """Test successful command execution"""
