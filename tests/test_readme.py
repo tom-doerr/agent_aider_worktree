@@ -42,10 +42,8 @@ def test_readme_usage_section_formatting():
     bash_blocks = [block for block in code_blocks if block.startswith("bash")]
     assert len(bash_blocks) > 0, "No bash code blocks found in usage section"
     # Check for required command patterns in bash blocks
-    required_patterns = [
-        r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"
-    ]
-    
+    required_patterns = [r"agent-aider-worktree(\s+--[\w-]+)*\s+['\"][^\"']+['\"]"]
+
     pattern_found = False
     for block in bash_blocks:
         if any(re.search(pattern, block) for pattern in required_patterns):
@@ -60,5 +58,7 @@ def test_readme_usage_section_formatting():
             assert (
                 len(block.split()) >= 2
             ), f"Command should include a task argument: {block}"
-    
-    assert pattern_found, "Missing valid example command in bash code blocks of usage section"
+
+    assert (
+        pattern_found
+    ), "Missing valid example command in bash code blocks of usage section"
