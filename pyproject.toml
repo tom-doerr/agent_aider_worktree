@@ -5,9 +5,14 @@ description = "A CLI tool for managing git worktrees with AI-assisted developmen
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
 license = "MIT"
-packages = [
-    {include = "agent_aider_worktree", from = "src"}
-]
+packages = [{include = "agent_aider_worktree", from = "src"}]
+include = ["LICENSE"]
+
+[tool.poetry.scripts]
+agent-aider-worktree = "agent_aider_worktree.cli:main"
+
+[tool.poetry.urls]
+Homepage = "https://github.com/yourusername/agent-aider-worktree"
 
 [tool.poetry.dependencies]
 python = "^3.11"
