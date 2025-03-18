@@ -5,11 +5,10 @@ import re
 import subprocess
 import sys
 from pathlib import Path
-from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent_aider_worktree import setup_arg_parser
+from agent_aider_worktree.cli import setup_arg_parser
 
 
 def test_readme_exists():
@@ -93,7 +92,6 @@ def test_help_output_examples():
         line.strip() for line in examples_section.split("\n")
         if line.strip() and not line.startswith("%")
     ]
-    
     # Verify exact match of expected examples
     expected_examples = [
         "agent-aider-worktree \"Add user authentication feature\"",
