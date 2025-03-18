@@ -4,7 +4,7 @@ import re
 import subprocess
 import argparse
 from pathlib import Path
-from agent_aider_worktree import main
+from agent_aider_worktree import main  # Matches the actual file name
 
 
 def test_readme_exists():

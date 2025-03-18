@@ -431,10 +431,6 @@ def main():
 
     signal.signal(signal.SIGINT, signal_handler)
 
-            "[dim]Create a git worktree and run aider until tests pass, then merge back to main.[/dim]",
-        )
-    )
-
     console.print(
         Panel.fit(
             "[bold cyan]Agent Aider Worktree[/bold cyan]\n"
