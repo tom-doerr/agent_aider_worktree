@@ -94,10 +94,10 @@ def test_help_output_examples():
     ]
     # Verify exact match of expected examples
     expected_examples = [
-        'agent-aider-worktree "Add user authentication feature"',
-        'agent-aider-worktree -p /path/to/repo "Fix bug in login form"',
-        'agent-aider-worktree --model claude-3-opus "Implement new feature"',
-        'agent-aider-worktree --inner-loop 5 "Refactor database code"',
+        'agent-aider-worktree.py "Add user authentication feature"',
+        'agent-aider-worktree.py -p /path/to/repo "Fix bug in login form"',
+        'agent-aider-worktree.py --model claude-3-opus "Implement new feature"',
+        'agent-aider-worktree.py --inner-loop 5 "Refactor database code"',
     ]
     assert examples == expected_examples, "Help examples don't match expected output"
 
@@ -167,4 +167,4 @@ def test_arg_parser_configuration():
 
     # Verify boolean flags
     no_push_arg = get_argument(parser, "no_push")
-    assert no_push_arg.action == "store_true", "no_push should be a boolean flag"
+    assert isinstance(no_push_arg, argparse._StoreTrueAction), "no_push should be a boolean flag"

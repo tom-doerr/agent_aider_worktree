@@ -16,10 +16,10 @@ def test_arg_parser_valid_arguments():
     """Test argument parser with valid inputs"""
     parser = setup_arg_parser()
     # Test valid arguments
-    args = parser.parse_args(["test task", "--path", "/tmp", "--model", "gpt4"])
+    args = parser.parse_args(["test task", "--path", "/tmp", "--model", "claude-3-opus"])
     assert args.task == "test task"
     assert args.path == "/tmp"
-    assert args.model == "gpt4"
+    assert args.model == "claude-3-opus"
     assert args.no_push is False
     assert args.max_iterations == 10
 
