@@ -436,7 +436,7 @@ Examples:
   %(prog)s --inner-loop 5 "Refactor database code"
         """,
     )
-    
+
     parser.add_argument("task", help="The task description to pass to aider")
     parser.add_argument(
         "-p",
@@ -474,8 +474,9 @@ Examples:
         action="store_true",
         help="Disable automatic inclusion of Python files",
     )
-    
+
     return parser
+
 
 def main():
     """Main entry point for the CLI application"""
