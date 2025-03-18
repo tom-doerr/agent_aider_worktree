@@ -23,7 +23,7 @@ def create_worktree(repo_path, task_name):
     result = run_command("git branch --show-current", cwd=repo_path)
     current_branch = result.stdout.strip()
     branch_name = f"task/{safe_task_name}_{timestamp}"
-    console.print(fboldbold green]Creating new branch:[/bold green] {branch_name}")
+    console.print(f"[bold green]Creating new branch:[/bold green] {branch_name}")
     run_command(f"git branch {branch_name}", cwd=repo_path)
     console.print(f"[bold green]Creating worktree at:[/bold green] {worktree_path}")
     run_command(f"git worktree add {worktree_path} {branch_name}", cwd=repo_path)

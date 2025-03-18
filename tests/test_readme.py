@@ -91,7 +91,7 @@ def test_help_output_examples():
     # Get actual examples from help output
     examples_section = help_output.split("Examples:")[1]
     examples = [
-        line.strip() for line in examples_section.split("\n") 
+        line.strip() for line in examples_section.split("\n")
         if line.strip() and not line.startswith("%")
     ]
     
