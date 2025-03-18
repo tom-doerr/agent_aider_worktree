@@ -180,7 +180,7 @@ def generate_context(worktree_path):
         # Add focus directive
         focus_options = ["Focus on fixing the linting issues", "Focus on fixing bugs"]
 
-        focus_choice = (random.choice(focus_options) 
+        focus_choice = (random.choice(focus_options)
                       if focus_options else "Focus on code quality improvements")
         f.write(f"\n{focus_choice}\n")
 
@@ -353,7 +353,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
                 f"Look at the git status output and fix the conflicts. "
                 f"Original task: {task}"
             )
-            run_aider(worktree_path, conflict_task, args.model)
+            run_aider(worktree_path, conflict_task, model=args.model)
 
             # Check if conflicts were resolved
             status = run_command("git status", cwd=worktree_path)
@@ -380,7 +380,7 @@ def merge_and_push(worktree_path, main_repo_path, branch_name, main_branch, task
             fix_task = (
                 f"Fix the failing tests after merging with main. Original task: {task}"
             )
-            run_aider(worktree_path, fix_task, args.model)
+            run_aider(worktree_path, fix_task, model=args.model)
 
             # Check if tests pass now
             tests_pass = run_tests(worktree_path)
@@ -555,7 +555,7 @@ Examples:
                 pass  # Empty the file
 
         # Generate context file
-        generate_context(worktree_path, args)
+        generate_context(worktree_path)
 
         # Run aider
         console.print(
@@ -607,7 +607,8 @@ Examples:
                     break
                 else:
                     console.print(
-                        "[yellow]Merge conflicts detected. Running aider again to resolve conflicts...[/yellow]"
+                        "[yellow]Merge conflicts detected. " 
+                        "Running aider again to resolve conflicts...[/yellow]"
                     )
                     iteration += 1
                     if iteration > args.max_iterations:
