@@ -3,12 +3,13 @@
 import os
 import time
 import subprocess
-from rich.console import Console
 from typing import NamedTuple
+from rich.console import Console
 
 console = Console()
 
 class CommandResult(NamedTuple):
+    """Result container for command execution outcomes"""
     returncode: int
     stdout: str
     stderr: str

@@ -5,9 +5,10 @@ from pathlib import Path
 import argparse
 import subprocess
 import pytest
+from agent_aider_worktree.cli import setup_arg_parser
+from agent_aider_worktree.core import create_worktree, merge_and_push
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
-from agent_aider_worktree.cli import setup_arg_parser
 
 
 def test_arg_parser_valid_arguments():
@@ -62,7 +63,6 @@ def test_create_worktree_directory_creation(mocker, tmp_path):
 
     (test_repo / ".git").mkdir()  # Create fake git repo
 
-    from agent_aider_worktree.core import create_worktree
 
     worktree_path, branch_name, main_branch = create_worktree(
         str(test_repo), "test task"
@@ -78,7 +78,6 @@ def test_merge_and_push_logic(mocker):
     mock_run = mocker.patch("subprocess.run")
     mocker.patch("os.path.exists", return_value=True)
 
-    from agent_aider_worktree.core import merge_and_push
 
     # Mock successful merge
     mock_run.return_value.returncode = 0
