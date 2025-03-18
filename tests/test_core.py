@@ -6,7 +6,7 @@ from unittest.mock import Mock
 
 sys.path.insert(0, str(Path(__file__).parent.parent))
 
-from agent_aider_worktree.core import get_repo_name, run_command
+from agent_aider_worktree.core import get_repo_name, run_command  # pylint: disable=wrong-import-position
 
 
 def test_get_repo_name_ssh_url(mocker):
