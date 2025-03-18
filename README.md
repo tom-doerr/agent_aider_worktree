@@ -51,18 +51,32 @@ Tests include:
 ## Configuration
 
 Configure through command line options:
+
 ```bash
 agent-aider-worktree --model claude-3-opus --max-iterations 5 "Refactor database layer"
 ```
 
 Common options:
 - `--model`: Set AI model (default: r1)
-- `--max-iterations`: Maximum attempts to fix issues
+- `--max-iterations`: Maximum attempts to fix issues (default: 10)
 - `--all-files`: Include all files in AI context
 - `--no-push`: Disable automatic merging to main
+- `--verbose`: Show detailed debugging output
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+1. Fork the repository on GitHub
+2. Create a new branch for your feature
+3. Submit a pull request with your changes
+4. Ensure all tests pass and documentation is updated
+
+## License
+
+MIT License - see [LICENSE](LICENSE) file for full text.
 
 ## Requirements
 
-- Python 3.11+
-- git 2.20+
-- aider (installed automatically with package)
+- **Python 3.11+** - Latest stable version recommended
+- **git 2.20+** - Required for worktree functionality
+- **aider** - AI pair programming tool (installed automatically)
